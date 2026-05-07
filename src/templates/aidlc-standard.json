@@ -1,0 +1,72 @@
+{
+  "name": "AI-DLC Standard",
+  "description": "Standard project template for AI-DLC workflow integration",
+  "version": "1.0.0",
+  "fields": [
+    {
+      "name": "Type",
+      "type": "single_select",
+      "options": ["Epic", "Story", "Task", "Bug"]
+    },
+    {
+      "name": "Priority",
+      "type": "single_select",
+      "options": ["High", "Medium", "Low"]
+    },
+    {
+      "name": "Sprint",
+      "type": "iteration",
+      "duration": "2 weeks"
+    },
+    {
+      "name": "Status",
+      "type": "single_select",
+      "options": ["Backlog", "In Progress", "Review", "Done"]
+    }
+  ],
+  "views": [
+    {
+      "name": "Board",
+      "type": "board",
+      "groupBy": "Status"
+    },
+    {
+      "name": "Table",
+      "type": "table",
+      "columns": ["Title", "Type", "Priority", "Status", "Sprint", "Assignee"]
+    },
+    {
+      "name": "Roadmap",
+      "type": "roadmap",
+      "groupBy": "Sprint"
+    }
+  ],
+  "labels": [
+    { "name": "epic", "color": "7057ff", "description": "Epic-level work item" },
+    { "name": "story", "color": "0075ca", "description": "User story" },
+    { "name": "task", "color": "008672", "description": "Implementation task" },
+    { "name": "bug", "color": "d73a4a", "description": "Bug report" },
+    { "name": "enhancement", "color": "a2eeef", "description": "Enhancement request" },
+    { "name": "priority-high", "color": "b60205", "description": "High priority" },
+    { "name": "priority-medium", "color": "fbca04", "description": "Medium priority" },
+    { "name": "priority-low", "color": "0e8a16", "description": "Low priority" },
+    { "name": "has-children", "color": "c5def5", "description": "Issue has child issues" },
+    { "name": "blocked", "color": "e4e669", "description": "Issue is blocked" }
+  ],
+  "automation": [
+    {
+      "name": "Auto-move closed to Done",
+      "trigger": "issue_closed",
+      "action": "set_field",
+      "field": "Status",
+      "value": "Done"
+    },
+    {
+      "name": "Auto-add new to Backlog",
+      "trigger": "item_added",
+      "action": "set_field",
+      "field": "Status",
+      "value": "Backlog"
+    }
+  ]
+}

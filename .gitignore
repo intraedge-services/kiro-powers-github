@@ -1,0 +1,28 @@
+# Dependencies
+node_modules/
+
+# Build output
+dist/
+
+# Runtime generated files
+logs/
+config.json
+sync-state.json
+
+# Environment
+.env
+.env.local
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# AI-DLC documentation (project-specific, not distributed)
+aidlc-docs/
+
+# Kiro IDE configuration (user-specific, not part of Power distribution)
+.kiro/
+
+# Old github-power subfolder (migrated to root)
+github-power/
+node_modules/

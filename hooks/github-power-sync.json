@@ -1,0 +1,12 @@
+{
+  "name": "GitHub Power Sync",
+  "version": "1.0.0",
+  "description": "Prompts user to sync AI-DLC user stories to GitHub Projects after User Stories stage completes, and provides manual sync trigger.",
+  "when": {
+    "type": "postTaskExecution"
+  },
+  "then": {
+    "type": "askAgent",
+    "prompt": "The User Stories stage has completed. Check if the GitHub Power is configured (github-power/config.json exists). If configured, ask the user: 'Would you like to sync user stories to GitHub Projects?' with options A) Yes - Sync now, B) No - Continue without syncing. If they choose Yes, ask them to select a mapping strategy and then call the sync_stories MCP tool. If the Power is not configured, inform the user that GitHub Power is not set up and continue the workflow."
+  }
+}

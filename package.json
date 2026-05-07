@@ -1,0 +1,38 @@
+{
+  "name": "github-power",
+  "version": "1.0.0",
+  "description": "GitHub Power for Kiro — AI-DLC workflow integration with GitHub Projects V2",
+  "type": "module",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "tsc",
+    "start": "node dist/index.js",
+    "test": "jest",
+    "test:coverage": "jest --coverage",
+    "lint": "eslint src/ tests/",
+    "lint:fix": "eslint src/ tests/ --fix",
+    "format": "prettier --write src/ tests/",
+    "audit": "npm audit"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "1.12.1",
+    "uuid": "11.1.0",
+    "zod": "3.24.4"
+  },
+  "devDependencies": {
+    "@types/jest": "29.5.14",
+    "@types/node": "22.15.3",
+    "@types/uuid": "10.0.0",
+    "@typescript-eslint/eslint-plugin": "8.32.0",
+    "@typescript-eslint/parser": "8.32.0",
+    "eslint": "9.26.0",
+    "jest": "29.7.0",
+    "prettier": "3.5.3",
+    "ts-jest": "29.3.2",
+    "ts-node": "^10.9.2",
+    "typescript": "5.8.3"
+  },
+  "engines": {
+    "node": ">=22.0.0"
+  }
+}
