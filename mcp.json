@@ -1,0 +1,27 @@
+{
+  "mcpServers": {
+    "github-projects": {
+      "command": "node",
+      "args": ["/Users/dnilesh/Kiro/kiro-powers-github/server/dist/index.js"],
+      "env": {
+        "GITHUB_TOKEN": "${GITHUB_TOKEN}",
+        "GITHUB_PROJECTS_CACHE_DIR": "/Users/dnilesh/Kiro/kiro-powers-github/.kiro/github-cache"
+      },
+      "disabled": false,
+      "autoApprove": [
+        "list_projects",
+        "get_project",
+        "get_project_items",
+        "get_status_options",
+        "get_project_fields",
+        "list_views",
+        "list_workflows",
+        "list_iterations",
+        "get_project_stats",
+        "get_iteration_burndown",
+        "get_stale_items",
+        "get_cache_status"
+      ]
+    }
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "name": "Check PR Status",
+  "version": "1.0.0",
+  "description": "Shows status of all open PRs for the current repository including review status, CI checks, and linked issues.",
+  "when": {
+    "type": "userTriggered"
+  },
+  "then": {
+    "type": "askAgent",
+    "prompt": "List all open pull requests for the current repository. For each PR, show: title, review status, CI check results, and any linked issues. Use the list_pull_requests and get_pull_request_status tools from the github MCP server."
+  }
+}
