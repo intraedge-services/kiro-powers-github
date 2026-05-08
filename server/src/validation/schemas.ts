@@ -109,6 +109,7 @@ export const createFieldSchema = z.object({
   dataType: z.enum(["TEXT", "NUMBER", "DATE", "SINGLE_SELECT", "ITERATION"]).describe("Field data type"),
   options: z.array(z.object({
     name: z.string().min(1).max(50),
+    description: z.string().max(256).optional().default(""),
     color: z.string().max(20).optional(),
   })).optional().describe("Options for single-select fields"),
 });
