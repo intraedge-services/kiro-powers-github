@@ -31,7 +31,7 @@ export interface ParsedStory {
 }
 
 // ============================================================
-// Regex Patterns
+// Regex Patterns — AI-DLC numbered format
 // ============================================================
 
 const EPIC_HEADING_PATTERN = /^## Epic (\d+):\s*(.+)$/gm;
@@ -40,6 +40,15 @@ const AS_A_PATTERN = /\*\*As a\*\*\s*(.+?),?\s*$/m;
 const I_WANT_PATTERN = /\*\*I want\*\*\s*(.+?),?\s*$/m;
 const SO_THAT_PATTERN = /\*\*So that\*\*\s*(.+?)\.?\s*$/m;
 const CRITERIA_ITEM_PATTERN = /^- (.+)$/gm;
+
+// ============================================================
+// Regex Patterns — Simple markdown format
+// (e.g. "# Epic: Name", "## Story: Title", plain-text user story)
+// ============================================================
+
+const SIMPLE_EPIC_HEADING_PATTERN = /^# Epic:\s*(.+)$/gm;
+const SIMPLE_STORY_HEADING_PATTERN = /^## Story:\s*(.+)$/gm;
+const PLAIN_USER_STORY_PATTERN = /^As an?\s+(.+?),\s*I want\s+(.+?)(?:\s+so that\s+(.+?))?\.?\s*$/im;
 
 // ============================================================
 // Public API
@@ -96,40 +105,60 @@ export function calculateChecksum(story: ParsedStory): string {
 // ============================================================
 
 /**
- * Split content into epics by ## Epic headings.
+ * Split content into epics by ## Epic headings (numbered AI-DLC format)
+ * or # Epic: headings (simple markdown format).
  */
 function parseEpics(content: string): ParsedEpic[] {
   const epics: ParsedEpic[] = [];
+
+  // Try numbered AI-DLC format first: ## Epic 1: Name
   const epicMatches = [...content.matchAll(EPIC_HEADING_PATTERN)];
 
-  if (epicMatches.length === 0) {
-    // No epic headings found — try to parse stories directly
-    const stories = parseStoriesInEpic(content, 0);
-    if (stories.length > 0) {
-      epics.push({ number: 0, name: 'Default', stories });
+  if (epicMatches.length > 0) {
+    for (let i = 0; i < epicMatches.length; i++) {
+      const match = epicMatches[i];
+      const epicNumber = parseInt(match[1], 10);
+      const epicName = match[2].trim();
+
+      const startIndex = match.index! + match[0].length;
+      const endIndex = i + 1 < epicMatches.length ? epicMatches[i + 1].index! : content.length;
+      const epicContent = content.substring(startIndex, endIndex);
+
+      const stories = parseStoriesInEpic(epicContent, epicNumber);
+      epics.push({ number: epicNumber, name: epicName, stories });
     }
     return epics;
   }
 
-  for (let i = 0; i < epicMatches.length; i++) {
-    const match = epicMatches[i];
-    const epicNumber = parseInt(match[1], 10);
-    const epicName = match[2].trim();
+  // Try simple markdown format: # Epic: Name
+  const simpleEpicMatches = [...content.matchAll(SIMPLE_EPIC_HEADING_PATTERN)];
 
-    // Get content between this epic heading and the next (or end of file)
-    const startIndex = match.index! + match[0].length;
-    const endIndex = i + 1 < epicMatches.length ? epicMatches[i + 1].index! : content.length;
-    const epicContent = content.substring(startIndex, endIndex);
+  if (simpleEpicMatches.length > 0) {
+    for (let i = 0; i < simpleEpicMatches.length; i++) {
+      const match = simpleEpicMatches[i];
+      const epicNumber = i + 1;
+      const epicName = match[1].trim();
 
-    const stories = parseStoriesInEpic(epicContent, epicNumber);
-    epics.push({ number: epicNumber, name: epicName, stories });
+      const startIndex = match.index! + match[0].length;
+      const endIndex = i + 1 < simpleEpicMatches.length ? simpleEpicMatches[i + 1].index! : content.length;
+      const epicContent = content.substring(startIndex, endIndex);
+
+      const stories = parseStoriesInEpicSimple(epicContent, epicNumber);
+      epics.push({ number: epicNumber, name: epicName, stories });
+    }
+    return epics;
   }
 
+  // No epic headings found — try to parse stories directly
+  const stories = parseStoriesInEpic(content, 0);
+  if (stories.length > 0) {
+    epics.push({ number: 0, name: 'Default', stories });
+  }
   return epics;
 }
 
 /**
- * Extract stories from within an epic's content section.
+ * Extract stories from within an epic's content section (numbered AI-DLC format).
  */
 function parseStoriesInEpic(content: string, epicNumber: number): ParsedStory[] {
   const stories: ParsedStory[] = [];
@@ -140,7 +169,6 @@ function parseStoriesInEpic(content: string, epicNumber: number): ParsedStory[] 
     const storyId = match[1];
     const storyTitle = match[2].trim();
 
-    // Get content between this story heading and the next (or end of section)
     const startIndex = match.index! + match[0].length;
     const endIndex = i + 1 < storyMatches.length ? storyMatches[i + 1].index! : content.length;
     const storyContent = content.substring(startIndex, endIndex);
@@ -150,6 +178,55 @@ function parseStoriesInEpic(content: string, epicNumber: number): ParsedStory[] 
   }
 
   return stories;
+}
+
+/**
+ * Extract stories from within an epic's content section (simple markdown format).
+ * Expects headings like: ## Story: Title
+ */
+function parseStoriesInEpicSimple(content: string, epicNumber: number): ParsedStory[] {
+  const stories: ParsedStory[] = [];
+  const storyMatches = [...content.matchAll(SIMPLE_STORY_HEADING_PATTERN)];
+
+  for (let i = 0; i < storyMatches.length; i++) {
+    const match = storyMatches[i];
+    const storyTitle = match[1].trim();
+    const storyId = `${epicNumber}.${i + 1}`;
+
+    const startIndex = match.index! + match[0].length;
+    const endIndex = i + 1 < storyMatches.length ? storyMatches[i + 1].index! : content.length;
+    const storyContent = content.substring(startIndex, endIndex);
+
+    const story = parseStoryContentSimple(storyId, storyTitle, storyContent, epicNumber);
+    stories.push(story);
+  }
+
+  return stories;
+}
+
+/**
+ * Parse individual story content — simple markdown format.
+ * Extracts plain-text "As a ..., I want ..." and ### Acceptance Criteria.
+ */
+function parseStoryContentSimple(
+  id: string,
+  title: string,
+  content: string,
+  epicNumber: number
+): ParsedStory {
+  const userStoryMatch = content.match(PLAIN_USER_STORY_PATTERN);
+
+  const acceptanceCriteria = parseAcceptanceCriteria(content);
+
+  return {
+    id,
+    title,
+    asA: userStoryMatch ? userStoryMatch[1].trim() : '',
+    iWant: userStoryMatch ? userStoryMatch[2].trim() : '',
+    soThat: userStoryMatch && userStoryMatch[3] ? userStoryMatch[3].trim() : '',
+    acceptanceCriteria,
+    epicNumber,
+  };
 }
 
 /**
@@ -180,11 +257,16 @@ function parseStoryContent(
 
 /**
  * Extract acceptance criteria bullet points from story content.
- * Looks for content after "Acceptance Criteria" heading or just extracts all bullet points.
+ * Looks for content after "Acceptance Criteria" heading (bold or markdown heading)
+ * or just extracts all bullet points.
  */
 function parseAcceptanceCriteria(content: string): string[] {
-  // Try to find criteria section
-  const criteriaStart = content.indexOf('**Acceptance Criteria');
+  // Try bold format: **Acceptance Criteria**
+  let criteriaStart = content.indexOf('**Acceptance Criteria');
+  // Try markdown heading format: ### Acceptance Criteria
+  if (criteriaStart < 0) {
+    criteriaStart = content.search(/^###?\s+Acceptance Criteria/m);
+  }
   const relevantContent = criteriaStart >= 0 ? content.substring(criteriaStart) : content;
 
   const criteria: string[] = [];
