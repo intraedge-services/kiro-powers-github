@@ -1,0 +1,18 @@
+# Kiro IDE configuration
+.kiro/
+
+# Environment files with secrets
+.env
+.env.local
+.env.*.local
+
+# OS generated files
+.DS_Store
+Thumbs.db
+
+# Node modules (if applicable)
+node_modules/
+
+# IDE files
+.vscode/
+.idea/
