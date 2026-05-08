@@ -1,11 +1,10 @@
 {
   "mcpServers": {
     "github-projects": {
-      "command": "node",
-      "args": ["/Users/dnilesh/Kiro/kiro-powers-github/server/dist/index.js"],
+      "command": "bash",
+      "args": ["server/start.sh"],
       "env": {
-        "GITHUB_TOKEN": "${GITHUB_TOKEN}",
-        "GITHUB_PROJECTS_CACHE_DIR": "/Users/dnilesh/Kiro/kiro-powers-github/.kiro/github-cache"
+        "GITHUB_TOKEN": "${GITHUB_TOKEN}"
       },
       "disabled": false,
       "autoApprove": [

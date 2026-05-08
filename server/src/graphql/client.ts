@@ -30,8 +30,10 @@ export function getRateLimitState(): RateLimitState {
  */
 function createClient(): GraphQLClient {
   const token = process.env.GITHUB_TOKEN;
-  if (!token) {
-    throw new Error("GITHUB_TOKEN is not set");
+  if (!token || token === "${GITHUB_TOKEN}" || token.trim() === "") {
+    throw new Error(
+      "GITHUB_TOKEN is not set. Please either: (1) export GITHUB_TOKEN in your shell before launching the IDE, or (2) create a .env file with GITHUB_TOKEN=ghp_... at the workspace root."
+    );
   }
 
   return new GraphQLClient(GITHUB_GRAPHQL_ENDPOINT, {
