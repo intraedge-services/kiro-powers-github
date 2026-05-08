@@ -1,8 +1,8 @@
 {
   "mcpServers": {
     "github-projects": {
-      "command": "bash",
-      "args": ["server/start.sh"],
+      "command": "node",
+      "args": ["server/dist/index.js"],
       "env": {
         "GITHUB_TOKEN": "${GITHUB_TOKEN}"
       },
@@ -19,7 +19,12 @@
         "get_project_stats",
         "get_iteration_burndown",
         "get_stale_items",
-        "get_cache_status"
+        "get_cache_status",
+        "list_pull_requests",
+        "get_pull_request",
+        "list_issues",
+        "list_branches",
+        "get_repository"
       ]
     }
   }
