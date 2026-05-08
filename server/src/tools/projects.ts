@@ -9,15 +9,39 @@ import { log } from "../utils/logger.js";
 export function registerProjectTools(server: McpServer): void {
   server.tool("create_project", "Create a new GitHub Project V2", createProjectSchema.shape, async (params) => {
     const input = createProjectSchema.parse(params);
-    log("INFO", "create_project", `Creating project "${input.title}" for ${input.owner}`);
+    log("INFO", "create_project", `Creating project "${input.title}" for ${input.owner} (type: ${input.type})`);
 
-    // Get owner node ID first
-    const ownerData = await executeGraphQL<{ user?: { id: string }; organization?: { id: string } }>(
-      `query { user(login: "${input.owner}") { id } }`,
-    );
-    const ownerId = ownerData.user?.id;
+    // Get owner node ID - try specified type first, then fallback to the other
+    let ownerId: string | undefined;
+
+    if (input.type === "org") {
+      const orgData = await executeGraphQL<{ organization?: { id: string } }>(
+        `query { organization(login: "${input.owner}") { id } }`,
+      );
+      ownerId = orgData.organization?.id;
+      if (!ownerId) {
+        // Fallback: try as user
+        const userData = await executeGraphQL<{ user?: { id: string } }>(
+          `query { user(login: "${input.owner}") { id } }`,
+        );
+        ownerId = userData.user?.id;
+      }
+    } else {
+      const userData = await executeGraphQL<{ user?: { id: string } }>(
+        `query { user(login: "${input.owner}") { id } }`,
+      );
+      ownerId = userData.user?.id;
+      if (!ownerId) {
+        // Fallback: try as organization
+        const orgData = await executeGraphQL<{ organization?: { id: string } }>(
+          `query { organization(login: "${input.owner}") { id } }`,
+        );
+        ownerId = orgData.organization?.id;
+      }
+    }
+
     if (!ownerId) {
-      return { content: [{ type: "text" as const, text: JSON.stringify({ error: "Owner not found", owner: input.owner }) }] };
+      return { content: [{ type: "text" as const, text: JSON.stringify({ error: "Owner not found as user or organization", owner: input.owner }) }] };
     }
 
     const result = await executeGraphQL<{ createProjectV2: { projectV2: { id: string; title: string; number: number; url: string } } }>(

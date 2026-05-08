@@ -20,6 +20,7 @@ export const createProjectSchema = z.object({
   title: titleSchema,
   description: bodySchema,
   template: z.string().max(100).optional().describe("Template name"),
+  type: z.enum(["user", "org"]).default("user").describe("Owner type (user or org)"),
 });
 
 export const listProjectsSchema = z.object({
