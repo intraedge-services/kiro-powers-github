@@ -21,15 +21,13 @@ function loadEnvFile(): void {
   if (process.env.GITHUB_TOKEN && process.env.GITHUB_TOKEN.startsWith("gh")) return;
 
   // Try to load from .env files (fallback for when IDE doesn't pass env vars)
-  // Use multiple strategies to find the .env file
+  // Use multiple strategies to find the .env file relative to the script location
   const scriptDir = new URL(".", import.meta.url).pathname;
   const envPaths = [
-    "/Users/dnilesh/Kiro/kiro-powers-github/.env",
     resolve(process.cwd(), ".env"),
     resolve(process.cwd(), "server/.env"),
     resolve(scriptDir, "../../.env"),
     resolve(scriptDir, "../../../.env"),
-    resolve(scriptDir, "../../../../.env"),
   ];
 
   for (const envPath of envPaths) {
@@ -57,9 +55,11 @@ function loadEnvFile(): void {
 
 function validateEnvironment(): void {
   const token = process.env.GITHUB_TOKEN;
-  if (!token) {
-    log("ERROR", "startup", "GITHUB_TOKEN environment variable is not set. Server cannot start.");
-    process.exit(1);
+  if (!token || token === "${GITHUB_TOKEN}" || token.trim() === "") {
+    log("ERROR", "startup", "GITHUB_TOKEN environment variable is not set or was not resolved. Ensure GITHUB_TOKEN is exported in your shell or defined in a .env file at the workspace root.");
+    // Don't exit — let the server start so the MCP connection stays open
+    // and tools can return meaningful errors instead of "Connection closed"
+    return;
   }
   if (!token.startsWith("ghp_") && !token.startsWith("github_pat_")) {
     log("WARN", "startup", "GITHUB_TOKEN does not match expected format (ghp_* or github_pat_*). Proceeding anyway.");
