@@ -20,6 +20,7 @@ export function registerFieldTools(server: McpServer): void {
     if (input.dataType === "SINGLE_SELECT" && input.options) {
       variables.singleSelectOptions = input.options.map((o) => ({
         name: o.name,
+        description: o.description || "",
         color: o.color || "GRAY",
       }));
     }

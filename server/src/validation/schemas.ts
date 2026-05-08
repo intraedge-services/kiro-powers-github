@@ -109,6 +109,7 @@ export const createFieldSchema = z.object({
   dataType: z.enum(["TEXT", "NUMBER", "DATE", "SINGLE_SELECT", "ITERATION"]).describe("Field data type"),
   options: z.array(z.object({
     name: z.string().min(1).max(50),
+    description: z.string().max(256).optional().default(""),
     color: z.string().max(20).optional(),
   })).optional().describe("Options for single-select fields"),
 });
@@ -216,3 +217,74 @@ export const refreshCacheSchema = z.object({
 export const getCacheStatusSchema = z.object({});
 
 export const clearCacheSchema = z.object({});
+
+// Pull Request Schemas
+export const createPullRequestSchema = z.object({
+  owner: ownerSchema,
+  repo: z.string().min(1).max(100).describe("Repository name"),
+  title: titleSchema,
+  body: bodySchema,
+  head: z.string().min(1).max(256).describe("Branch containing changes"),
+  base: z.string().min(1).max(256).describe("Branch to merge into"),
+  draft: z.boolean().optional().describe("Create as draft PR"),
+});
+
+export const listPullRequestsSchema = z.object({
+  owner: ownerSchema,
+  repo: z.string().min(1).max(100).describe("Repository name"),
+  state: z.enum(["open", "closed", "all"]).default("open").describe("PR state filter"),
+  perPage: z.number().int().min(1).max(100).default(20).describe("Results per page"),
+});
+
+export const getPullRequestSchema = z.object({
+  owner: ownerSchema,
+  repo: z.string().min(1).max(100).describe("Repository name"),
+  pullNumber: z.number().int().min(1).describe("Pull request number"),
+});
+
+export const mergePullRequestSchema = z.object({
+  owner: ownerSchema,
+  repo: z.string().min(1).max(100).describe("Repository name"),
+  pullNumber: z.number().int().min(1).describe("Pull request number"),
+  mergeMethod: z.enum(["merge", "squash", "rebase"]).default("merge").describe("Merge method"),
+  commitTitle: z.string().max(256).optional().describe("Custom merge commit title"),
+  commitMessage: z.string().max(65536).optional().describe("Custom merge commit message"),
+});
+
+// Issue Schemas
+export const createIssueSchema = z.object({
+  owner: ownerSchema,
+  repo: z.string().min(1).max(100).describe("Repository name"),
+  title: titleSchema,
+  body: bodySchema,
+  labels: z.array(z.string().max(50)).max(20).optional().describe("Labels to apply"),
+  assignees: z.array(z.string().max(39)).max(10).optional().describe("Users to assign"),
+});
+
+export const listIssuesSchema = z.object({
+  owner: ownerSchema,
+  repo: z.string().min(1).max(100).describe("Repository name"),
+  state: z.enum(["open", "closed", "all"]).default("open").describe("Issue state filter"),
+  labels: z.string().max(200).optional().describe("Comma-separated label filter"),
+  perPage: z.number().int().min(1).max(100).default(20).describe("Results per page"),
+});
+
+// Branch Schemas
+export const createBranchSchema = z.object({
+  owner: ownerSchema,
+  repo: z.string().min(1).max(100).describe("Repository name"),
+  branch: z.string().min(1).max(256).describe("New branch name"),
+  from: z.string().min(1).max(256).default("main").describe("Source branch to create from"),
+});
+
+export const listBranchesSchema = z.object({
+  owner: ownerSchema,
+  repo: z.string().min(1).max(100).describe("Repository name"),
+  perPage: z.number().int().min(1).max(100).default(30).describe("Results per page"),
+});
+
+// Repository Schema
+export const getRepositorySchema = z.object({
+  owner: ownerSchema,
+  repo: z.string().min(1).max(100).describe("Repository name"),
+});
