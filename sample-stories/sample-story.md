@@ -19,3 +19,13 @@ As a user, I want dashboard visibility.
 - Dashboard loads
 - Open issues displayed
 - Pull requests displayed
+
+## Story: Notification Service
+
+As a user, I want to receive notifications.
+
+### Acceptance Criteria
+
+- Email notifications supported
+- Push notifications supported
+- Retry mechanism available
