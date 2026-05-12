@@ -1,0 +1,77 @@
+# ═══════════════════════════════════════════════════════════════════════════════
+# COS Financial Lakehouse — GitHub Actions: Deploy Glue ETL
+# Uses OIDC for credential-free AWS authentication
+#
+# Prerequisites:
+#   1. Create IAM OIDC provider for GitHub in your AWS account
+#   2. Create IAM role with trust policy for this repo
+#   3. Set repository secret: AWS_ROLE_ARN
+#
+# Trigger: Push to main, or manual dispatch
+# ═══════════════════════════════════════════════════════════════════════════════
+
+name: Deploy Glue ETL
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'glue-jobs/**'
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: 'Target environment'
+        required: true
+        default: 'dev'
+        type: choice
+        options:
+          - dev
+          - staging
+          - prod
+
+permissions:
+  id-token: write   # Required for OIDC
+  contents: read
+
+env:
+  AWS_REGION: us-east-1
+  BUCKET: cos-financial-lakehouse-demo
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment: ${{ github.event.inputs.environment || 'dev' }}
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Configure AWS credentials (OIDC)
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ secrets.AWS_ROLE_ARN }}
+          aws-region: ${{ env.AWS_REGION }}
+          role-session-name: github-glue-deploy
+
+      - name: Verify AWS access
+        run: |
+          echo "Account: $(aws sts get-caller-identity --query Account --output text)"
+          echo "Region: $AWS_REGION"
+
+      - name: Deploy Glue ETL
+        run: |
+          chmod +x glue-jobs/deploy-glue.sh
+          ./glue-jobs/deploy-glue.sh
+        env:
+          TAG_OWNER: github-actions
+          TAG_ENV: ${{ github.event.inputs.environment || 'dev' }}
+          TAG_PROJECT: cos-financial-lakehouse
+          TAG_CLIENT: COS
+          TAG_RETAIN: "false"
+
+      - name: Run Bronze job (smoke test)
+        if: github.event.inputs.environment == 'dev'
+        run: |
+          RUN_ID=$(aws glue start-job-run --job-name COS-UCM-to-Bronze-ETL --output text --query 'JobRunId')
+          echo "Started Bronze job: $RUN_ID"
+          echo "Monitor: aws glue get-job-run --job-name COS-UCM-to-Bronze-ETL --run-id $RUN_ID"

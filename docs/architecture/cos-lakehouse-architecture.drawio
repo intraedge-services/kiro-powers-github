@@ -1,0 +1,145 @@
+<mxfile host="app.diagrams.net" modified="2025-05-12T00:00:00.000Z" agent="Kiro" version="21.0.0">
+  <diagram name="COS Lakehouse Architecture" id="cos-arch-1">
+    <mxGraphModel dx="1422" dy="762" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1600" pageHeight="900" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+
+        <!-- Title -->
+        <mxCell id="title" value="COS Financial Lakehouse — AWS Iceberg Architecture" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=20;fontStyle=1" vertex="1" parent="1">
+          <mxGeometry x="400" y="20" width="800" height="40" as="geometry" />
+        </mxCell>
+
+        <!-- Source System -->
+        <mxCell id="source-group" value="SOURCE SYSTEM" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;fontStyle=1;verticalAlign=top;fontSize=12" vertex="1" parent="1">
+          <mxGeometry x="40" y="100" width="200" height="280" as="geometry" />
+        </mxCell>
+        <mxCell id="oracle" value="Oracle Fusion&#xa;Cloud 25D" style="shape=image;verticalLabelPosition=bottom;labelBackgroundColor=default;verticalAlign=top;aspect=fixed;imageAspect=0;image=https://img.icons8.com/color/96/oracle-logo.png;html=1;" vertex="1" parent="1">
+          <mxGeometry x="100" y="140" width="80" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="bicc" value="BICC&#xa;(PVO Extracts)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="1">
+          <mxGeometry x="70" y="240" width="140" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="ucm" value="UCM&#xa;Staging" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="1">
+          <mxGeometry x="70" y="300" width="140" height="40" as="geometry" />
+        </mxCell>
+
+        <!-- Arrow: Source to AWS -->
+        <mxCell id="arrow-source-aws" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;exitX=1;exitY=0.5;entryX=0;entryY=0.5;strokeWidth=3;strokeColor=#FF8C00;" edge="1" parent="1" source="ucm" target="landing">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="arrow-label-csv" value="CSV/Parquet" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=10;" vertex="1" connectable="0" parent="arrow-source-aws">
+          <mxGeometry x="-0.2" relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- S3 Landing -->
+        <mxCell id="landing" value="S3 Landing&#xa;Zone" style="outlineConnect=0;fontColor=#232F3E;gradientColor=none;fillColor=#3F8624;strokeColor=none;dashed=0;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;fontSize=11;fontStyle=0;aspect=fixed;pointerEvents=1;shape=mxgraph.aws4.s3;" vertex="1" parent="1">
+          <mxGeometry x="320" y="290" width="60" height="60" as="geometry" />
+        </mxCell>
+
+        <!-- Bronze Layer -->
+        <mxCell id="bronze-group" value="BRONZE LAYER" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#CD7F32;strokeColor=#8B4513;fontStyle=1;verticalAlign=top;fontSize=12;fontColor=#FFFFFF;opacity=30" vertex="1" parent="1">
+          <mxGeometry x="420" y="100" width="220" height="300" as="geometry" />
+        </mxCell>
+        <mxCell id="glue-bronze" value="UCM_to_Bronze&#xa;ETL" style="outlineConnect=0;fontColor=#232F3E;gradientColor=none;fillColor=#8C4FFF;strokeColor=none;dashed=0;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;fontSize=10;fontStyle=0;aspect=fixed;pointerEvents=1;shape=mxgraph.aws4.glue;" vertex="1" parent="1">
+          <mxGeometry x="490" y="140" width="60" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="iceberg-bronze" value="Iceberg&#xa;Bronze Tables" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=15;fillColor=#CD7F32;strokeColor=#8B4513;fontColor=#FFFFFF;" vertex="1" parent="1">
+          <mxGeometry x="470" y="250" width="100" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="quarantine" value="Quarantine" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="450" y="360" width="80" height="30" as="geometry" />
+        </mxCell>
+
+        <!-- Silver Layer -->
+        <mxCell id="silver-group" value="SILVER LAYER" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#C0C0C0;strokeColor=#808080;fontStyle=1;verticalAlign=top;fontSize=12;opacity=30" vertex="1" parent="1">
+          <mxGeometry x="700" y="100" width="220" height="300" as="geometry" />
+        </mxCell>
+        <mxCell id="glue-silver" value="Bronze_to_Silver&#xa;ETL" style="outlineConnect=0;fontColor=#232F3E;gradientColor=none;fillColor=#8C4FFF;strokeColor=none;dashed=0;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;fontSize=10;fontStyle=0;aspect=fixed;pointerEvents=1;shape=mxgraph.aws4.glue;" vertex="1" parent="1">
+          <mxGeometry x="770" y="140" width="60" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="iceberg-silver" value="Iceberg&#xa;Silver Tables" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=15;fillColor=#C0C0C0;strokeColor=#808080;" vertex="1" parent="1">
+          <mxGeometry x="750" y="250" width="100" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="silver-features" value="• Dedup&#xa;• MERGE INTO&#xa;• Fiscal Year&#xa;• Metrics" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=9;" vertex="1" parent="1">
+          <mxGeometry x="720" y="340" width="100" height="60" as="geometry" />
+        </mxCell>
+
+        <!-- Gold Layer -->
+        <mxCell id="gold-group" value="GOLD LAYER" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFD700;strokeColor=#B8860B;fontStyle=1;verticalAlign=top;fontSize=12;opacity=30" vertex="1" parent="1">
+          <mxGeometry x="980" y="100" width="220" height="300" as="geometry" />
+        </mxCell>
+        <mxCell id="glue-gold" value="Silver_to_Gold&#xa;ETL" style="outlineConnect=0;fontColor=#232F3E;gradientColor=none;fillColor=#8C4FFF;strokeColor=none;dashed=0;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;fontSize=10;fontStyle=0;aspect=fixed;pointerEvents=1;shape=mxgraph.aws4.glue;" vertex="1" parent="1">
+          <mxGeometry x="1050" y="140" width="60" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="iceberg-gold" value="Iceberg Gold&#xa;Star Schema" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=15;fillColor=#FFD700;strokeColor=#B8860B;" vertex="1" parent="1">
+          <mxGeometry x="1030" y="250" width="100" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="gold-tables" value="• dim_coa&#xa;• dim_period&#xa;• dim_supplier&#xa;• fact_budgetary" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=9;" vertex="1" parent="1">
+          <mxGeometry x="1000" y="340" width="110" height="60" as="geometry" />
+        </mxCell>
+
+        <!-- Arrows between layers -->
+        <mxCell id="arrow-land-bronze" style="edgeStyle=orthogonalEdgeStyle;rounded=0;strokeWidth=2;strokeColor=#FF8C00;" edge="1" parent="1" source="landing" target="glue-bronze">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="arrow-bronze-silver" style="edgeStyle=orthogonalEdgeStyle;rounded=0;strokeWidth=2;strokeColor=#4472C4;" edge="1" parent="1" source="iceberg-bronze" target="glue-silver">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="arrow-silver-gold" style="edgeStyle=orthogonalEdgeStyle;rounded=0;strokeWidth=2;strokeColor=#4472C4;" edge="1" parent="1" source="iceberg-silver" target="glue-gold">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- Analytics Layer -->
+        <mxCell id="athena" value="Amazon&#xa;Athena" style="outlineConnect=0;fontColor=#232F3E;gradientColor=none;fillColor=#8C4FFF;strokeColor=none;dashed=0;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;fontSize=11;fontStyle=0;aspect=fixed;pointerEvents=1;shape=mxgraph.aws4.athena;" vertex="1" parent="1">
+          <mxGeometry x="1280" y="160" width="60" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="powerbi" value="Power BI&#xa;Dashboard" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontStyle=1;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="1400" y="170" width="120" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="arrow-gold-athena" style="edgeStyle=orthogonalEdgeStyle;rounded=0;strokeWidth=2;strokeColor=#8C4FFF;" edge="1" parent="1" source="iceberg-gold" target="athena">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="arrow-athena-pbi" style="edgeStyle=orthogonalEdgeStyle;rounded=0;strokeWidth=2;strokeColor=#6c8ebf;" edge="1" parent="1" source="athena" target="powerbi">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="athena-label" value="ODBC&#xa;DirectQuery" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=9;" vertex="1" connectable="0" parent="arrow-athena-pbi">
+          <mxGeometry x="-0.2" relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- Glue Catalog -->
+        <mxCell id="catalog" value="AWS Glue&#xa;Catalog" style="outlineConnect=0;fontColor=#232F3E;gradientColor=none;fillColor=#8C4FFF;strokeColor=none;dashed=0;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;fontSize=10;fontStyle=0;aspect=fixed;pointerEvents=1;shape=mxgraph.aws4.glue_data_catalog;" vertex="1" parent="1">
+          <mxGeometry x="780" y="460" width="60" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="catalog-label" value="cos_bronze | cos_silver | cos_gold" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=9;" vertex="1" parent="1">
+          <mxGeometry x="720" y="530" width="180" height="20" as="geometry" />
+        </mxCell>
+
+        <!-- Workflow -->
+        <mxCell id="workflow" value="🔄 COS-Lakehouse-Pipeline&#xa;(Glue Workflow)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontStyle=1;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="520" y="460" width="200" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="trigger-label" value="⏰ Daily 6AM → ⚡ Bronze✓→Silver → ⚡ Silver✓→Gold" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=9;" vertex="1" parent="1">
+          <mxGeometry x="470" y="510" width="300" height="20" as="geometry" />
+        </mxCell>
+
+        <!-- Security -->
+        <mxCell id="iam" value="IAM Role&#xa;(cos-lakehouse-glue-etl-role)" style="outlineConnect=0;fontColor=#232F3E;gradientColor=none;fillColor=#DD344C;strokeColor=none;dashed=0;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;fontSize=9;fontStyle=0;aspect=fixed;pointerEvents=1;shape=mxgraph.aws4.role;" vertex="1" parent="1">
+          <mxGeometry x="1100" y="460" width="50" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="github" value="GitHub Actions&#xa;(OIDC CI/CD)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f0f0f0;strokeColor=#333333;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="1200" y="465" width="120" height="40" as="geometry" />
+        </mxCell>
+
+        <!-- S3 base -->
+        <mxCell id="s3-base" value="Amazon S3: cos-financial-lakehouse-demo" style="outlineConnect=0;fontColor=#232F3E;gradientColor=none;fillColor=#3F8624;strokeColor=none;dashed=0;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;fontSize=11;fontStyle=1;aspect=fixed;pointerEvents=1;shape=mxgraph.aws4.s3;" vertex="1" parent="1">
+          <mxGeometry x="780" y="580" width="60" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="s3-paths" value="/landing/ | /bronze/ | /silver/ | /gold/ | /quarantine/ | /glue-scripts/" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=9;" vertex="1" parent="1">
+          <mxGeometry x="620" y="650" width="380" height="20" as="geometry" />
+        </mxCell>
+
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

@@ -1,0 +1,26 @@
+# ═══════════════════════════════════════════════════════════════════════
+# COS Financial Lakehouse — Terraform Variables
+# Copy this file to terraform.tfvars and fill in your values.
+#
+# IMPORTANT: All 5 mandatory tags are REQUIRED by org policy.
+# Resource creation will be DENIED if these are missing.
+# ═══════════════════════════════════════════════════════════════════════
+
+# AWS Configuration
+aws_region  = "us-east-1"
+environment = "dev"
+
+# Resource Naming
+project_name          = "cos-financial-lakehouse"
+bucket_name           = "cos-financial-lakehouse-demo"
+athena_results_bucket = "cos-athena-results-demo"
+
+# ─────────────────────────────────────────────────────────────────────
+# MANDATORY ORGANIZATION TAGS (required by SCP policy)
+# ─────────────────────────────────────────────────────────────────────
+
+tag_project = "cos-financial-lakehouse"
+tag_owner   = "narmatha"              # ← Your name or team
+tag_env     = "dev"                   # ← dev | staging | prod
+tag_client  = "City of Scottsdale"    # ← Client name
+tag_retain  = "false"                 # ← true | false
