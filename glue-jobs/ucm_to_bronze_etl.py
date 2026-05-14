@@ -173,6 +173,113 @@ def read_landing_csv(path, expected_schema):
         raise
 
 
+def detect_and_evolve_schema(landing_path, table_name, expected_schema):
+    """
+    AUTO SCHEMA EVOLUTION — Detects new columns from Oracle and evolves
+    the Iceberg table automatically. No manual intervention needed.
+
+    How it works:
+    1. Read the CSV header (no data, just column names)
+    2. Compare with expected schema
+    3. If new columns found → ALTER TABLE ADD COLUMNS on Iceberg table
+    4. Update the schema for this run so new data is captured
+    5. Log everything for audit
+
+    Returns: updated schema (StructType) with any new columns added
+    """
+    logger.info(f"  Checking for schema drift in: {landing_path}")
+
+    try:
+        # Read just the header row to discover actual columns from Oracle
+        actual_df = spark.read \
+            .option("header", "true") \
+            .option("inferSchema", "true") \
+            .csv(landing_path)
+
+        actual_columns = set(actual_df.columns)
+        expected_columns = set([f.name for f in expected_schema.fields])
+
+        # Detect new columns (in Oracle extract but not in our schema)
+        new_columns = actual_columns - expected_columns
+
+        # Detect removed columns (in our schema but not in Oracle extract)
+        removed_columns = expected_columns - actual_columns
+
+        if removed_columns:
+            logger.warning(f"  ⚠️ Columns REMOVED from Oracle extract: {removed_columns}")
+            logger.warning(f"  These columns will be NULL in this load")
+
+        if not new_columns:
+            logger.info(f"  ✅ No schema drift detected. Schema is stable.")
+            return expected_schema
+
+        # NEW COLUMNS DETECTED — Auto-evolve!
+        logger.warning(f"  🔄 SCHEMA DRIFT DETECTED! New columns from Oracle: {new_columns}")
+
+        # Determine data types for new columns from the inferred schema
+        new_fields = []
+        for col_name in new_columns:
+            inferred_type = actual_df.schema[col_name].dataType
+            new_fields.append(StructField(col_name, inferred_type, True))
+            logger.info(f"    New column: {col_name} ({inferred_type})")
+
+        # Step 1: ALTER TABLE ADD COLUMNS on the Iceberg table
+        full_table = f"{CATALOG}.{DATABASE}.{table_name}"
+        for field in new_fields:
+            # Map Spark types to Athena/Iceberg types
+            iceberg_type = _spark_type_to_iceberg(field.dataType)
+            alter_sql = f"ALTER TABLE {full_table} ADD COLUMNS ({_to_snake_case(field.name)} {iceberg_type})"
+            logger.info(f"    Executing: {alter_sql}")
+            try:
+                spark.sql(alter_sql)
+                logger.info(f"    ✅ Column added: {_to_snake_case(field.name)}")
+            except Exception as e:
+                # Column might already exist (idempotent)
+                if "already exists" in str(e).lower():
+                    logger.info(f"    ⏭️ Column already exists: {_to_snake_case(field.name)}")
+                else:
+                    logger.error(f"    ❌ Failed to add column: {e}")
+
+        # Step 2: Return updated schema that includes new columns
+        updated_fields = list(expected_schema.fields) + new_fields
+        updated_schema = StructType(updated_fields)
+
+        logger.info(f"  ✅ Schema evolved: {len(expected_schema.fields)} → {len(updated_fields)} columns")
+        logger.info(f"  New columns will be populated from this load onward")
+        logger.info(f"  Old rows will show NULL for new columns (Iceberg handles this)")
+
+        return updated_schema
+
+    except Exception as e:
+        logger.error(f"  ❌ Schema detection failed: {e}")
+        logger.info(f"  Falling back to expected schema")
+        return expected_schema
+
+
+def _spark_type_to_iceberg(spark_type):
+    """Convert Spark data type to Iceberg/Athena SQL type string."""
+    type_map = {
+        'LongType': 'bigint',
+        'IntegerType': 'int',
+        'DoubleType': 'double',
+        'FloatType': 'float',
+        'StringType': 'string',
+        'BooleanType': 'boolean',
+        'TimestampType': 'timestamp',
+        'DateType': 'date',
+        'DecimalType': 'double',
+    }
+    type_name = type(spark_type).__name__
+    return type_map.get(type_name, 'string')
+
+
+def _to_snake_case(name):
+    """Convert CamelCase Oracle column names to snake_case."""
+    import re
+    s1 = re.sub('(.)([A-Z][a-z]+)', r'\1_\2', name)
+    return re.sub('([a-z0-9])([A-Z])', r'\1_\2', s1).lower()
+
+
 def validate_records(df, key_column):
     """
     Validate records: separate good from bad.
@@ -298,8 +405,13 @@ def main():
                 logger.info(f"  No files found at {landing_path} — skipping")
                 continue
 
-            # Step 1: Read with schema enforcement
-            raw_df, raw_count = read_landing_csv(landing_path, config["schema"])
+            # Step 0: AUTO SCHEMA EVOLUTION — detect new columns from Oracle
+            evolved_schema = detect_and_evolve_schema(
+                landing_path, config["target_table"], config["schema"]
+            )
+
+            # Step 1: Read with evolved schema (includes any new columns)
+            raw_df, raw_count = read_landing_csv(landing_path, evolved_schema)
 
             # Step 2: Validate records
             good_df, bad_df = validate_records(raw_df, config["key_column"])
