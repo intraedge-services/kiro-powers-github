@@ -1,0 +1,160 @@
+<mxfile host="app.diagrams.net">
+  <diagram name="Star Schema Overview" id="star-schema">
+    <mxGraphModel dx="1200" dy="800" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1400" pageHeight="800" math="0" shadow="0">
+      <root>
+        <mxCell id="0"/>
+        <mxCell id="1" parent="0"/>
+        <mxCell id="title" value="&lt;b&gt;Data Warehouse Star Schema&lt;/b&gt;&lt;br&gt;Facts &amp; Dimensions" style="text;html=1;align=center;fontSize=16;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry x="450" y="10" width="350" height="50" as="geometry"/>
+        </mxCell>
+        <mxCell id="fct_gl" value="&lt;b&gt;fct_gl_transaction&lt;/b&gt;&lt;br&gt;&lt;hr&gt;&lt;font size=1&gt;GL Journal Line Postings&lt;br&gt;entered/accounted debit &amp; credit&lt;br&gt;net_amount, journal_source&lt;br&gt;actual_flag, encumbrance_type&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;shadow=1;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="100" y="350" width="220" height="100" as="geometry"/>
+        </mxCell>
+        <mxCell id="fct_budget" value="&lt;b&gt;fct_budget_snapshot&lt;/b&gt;&lt;br&gt;&lt;hr&gt;&lt;font size=1&gt;Period x COA Budget Balances&lt;br&gt;original/current budget&lt;br&gt;commitments, obligations&lt;br&gt;funds_available, pct_spent&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;shadow=1;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="380" y="350" width="220" height="100" as="geometry"/>
+        </mxCell>
+        <mxCell id="fct_proc" value="&lt;b&gt;fct_procurement_lifecycle&lt;/b&gt;&lt;br&gt;&lt;hr&gt;&lt;font size=1&gt;PO Distribution Lifecycle&lt;br&gt;ordered/received/invoiced/paid&lt;br&gt;days_po_to_receipt&lt;br&gt;lifecycle_status&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;shadow=1;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="660" y="350" width="220" height="100" as="geometry"/>
+        </mxCell>
+        <mxCell id="fct_labor" value="&lt;b&gt;fct_labor_transaction&lt;/b&gt;&lt;br&gt;&lt;hr&gt;&lt;font size=1&gt;Employee x Pay Period x Earning&lt;br&gt;hours_worked, gross_amount&lt;br&gt;regular/overtime pay&lt;br&gt;employer_benefits &amp; taxes&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;shadow=1;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="940" y="350" width="220" height="100" as="geometry"/>
+        </mxCell>
+        <mxCell id="fct_scenario" value="&lt;b&gt;fct_scenario_action&lt;/b&gt;&lt;br&gt;&lt;hr&gt;&lt;font size=1&gt;Scenario x Action Line&lt;br&gt;baseline/action/forecast amount&lt;br&gt;cumulative_savings&lt;br&gt;action_type, target_type&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;shadow=1;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="530" y="530" width="220" height="100" as="geometry"/>
+        </mxCell>
+        <mxCell id="dim_date" value="&lt;b&gt;dim_date&lt;/b&gt;&lt;br&gt;&lt;font size=1&gt;Fiscal Year/Quarter/Period&lt;br&gt;Role-Playing (posted, PO, receipt, invoice, payment)&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;shadow=1;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="20" y="80" width="240" height="70" as="geometry"/>
+        </mxCell>
+        <mxCell id="dim_coa" value="&lt;b&gt;dim_code_combination&lt;/b&gt;&lt;br&gt;&lt;font size=1&gt;Bridge: Fund+Dept+Account+Program+Project+Grant&lt;br&gt;full_coa_string, denormalized segment codes&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;shadow=1;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="430" y="160" width="280" height="70" as="geometry"/>
+        </mxCell>
+        <mxCell id="dim_fund" value="&lt;b&gt;dim_fund&lt;/b&gt;&lt;br&gt;&lt;font size=1&gt;Fund Type/Group&lt;br&gt;Restricted, Grant-funded&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;shadow=1;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="80" y="160" width="160" height="60" as="geometry"/>
+        </mxCell>
+        <mxCell id="dim_dept" value="&lt;b&gt;dim_department&lt;/b&gt;&lt;br&gt;&lt;font size=1&gt;Org Hierarchy (4 levels)&lt;br&gt;Executive Owner, Division&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;shadow=1;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="280" y="80" width="180" height="60" as="geometry"/>
+        </mxCell>
+        <mxCell id="dim_acct" value="&lt;b&gt;dim_account&lt;/b&gt;&lt;br&gt;&lt;font size=1&gt;Type/Class/Category&lt;br&gt;Labor, Benefits, Discretionary flags&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;shadow=1;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="500" y="80" width="200" height="60" as="geometry"/>
+        </mxCell>
+        <mxCell id="dim_program" value="&lt;b&gt;dim_program&lt;/b&gt;&lt;br&gt;&lt;font size=1&gt;Service Label&lt;br&gt;Strategic Priority, Mandated&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;shadow=1;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="740" y="80" width="180" height="60" as="geometry"/>
+        </mxCell>
+        <mxCell id="dim_project" value="&lt;b&gt;dim_project&lt;/b&gt;&lt;br&gt;&lt;font size=1&gt;Capital/Operating/Grant&lt;br&gt;Budget, Status, Dates&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;shadow=1;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="960" y="80" width="170" height="60" as="geometry"/>
+        </mxCell>
+        <mxCell id="dim_grant" value="&lt;b&gt;dim_grant&lt;/b&gt;&lt;br&gt;&lt;font size=1&gt;Sponsor, Award Amount&lt;br&gt;Start/End, Match Required&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;shadow=1;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="960" y="160" width="180" height="60" as="geometry"/>
+        </mxCell>
+        <mxCell id="dim_vendor" value="&lt;b&gt;dim_vendor&lt;/b&gt;&lt;br&gt;&lt;font size=1&gt;Supplier Name/Type/Status&lt;br&gt;Minority, Woman-owned, Local&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;shadow=1;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="830" y="250" width="190" height="60" as="geometry"/>
+        </mxCell>
+        <mxCell id="dim_position" value="&lt;b&gt;dim_position&lt;/b&gt;&lt;br&gt;&lt;font size=1&gt;Job Title, Grade, Step&lt;br&gt;Pay Type, FLSA, OT Eligible&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;shadow=1;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="1050" y="250" width="180" height="60" as="geometry"/>
+        </mxCell>
+        <mxCell id="dim_employee" value="&lt;b&gt;dim_employee&lt;/b&gt;&lt;br&gt;&lt;font size=1&gt;Name, Status, Hire Date&lt;br&gt;Tenure, Position, Department&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;shadow=1;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="1100" y="430" width="180" height="60" as="geometry"/>
+        </mxCell>
+        <mxCell id="dim_scenario" value="&lt;b&gt;dim_scenario&lt;/b&gt;&lt;br&gt;&lt;font size=1&gt;Scenario Name/Type/Owner&lt;br&gt;Baseline FY, Inflation %&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;shadow=1;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="250" y="570" width="180" height="60" as="geometry"/>
+        </mxCell>
+        <mxCell id="e1" edge="1" source="dim_date" target="fct_gl" style="edgeStyle=orthogonalEdgeStyle;rounded=1;strokeColor=#999999;" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e2" edge="1" source="dim_date" target="fct_budget" style="edgeStyle=orthogonalEdgeStyle;rounded=1;strokeColor=#999999;" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e3" edge="1" source="dim_date" target="fct_proc" style="edgeStyle=orthogonalEdgeStyle;rounded=1;strokeColor=#999999;" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e4" edge="1" source="dim_date" target="fct_labor" style="edgeStyle=orthogonalEdgeStyle;rounded=1;strokeColor=#999999;" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e5" edge="1" source="dim_coa" target="fct_gl" style="edgeStyle=orthogonalEdgeStyle;rounded=1;strokeColor=#82b366;strokeWidth=2;" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e6" edge="1" source="dim_coa" target="fct_budget" style="edgeStyle=orthogonalEdgeStyle;rounded=1;strokeColor=#82b366;strokeWidth=2;" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e7" edge="1" source="dim_coa" target="fct_proc" style="edgeStyle=orthogonalEdgeStyle;rounded=1;strokeColor=#82b366;strokeWidth=2;" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e8" edge="1" source="dim_fund" target="dim_coa" style="edgeStyle=orthogonalEdgeStyle;rounded=1;strokeColor=#6c8ebf;dashed=1;" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e9" edge="1" source="dim_dept" target="dim_coa" style="edgeStyle=orthogonalEdgeStyle;rounded=1;strokeColor=#6c8ebf;dashed=1;" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e10" edge="1" source="dim_acct" target="dim_coa" style="edgeStyle=orthogonalEdgeStyle;rounded=1;strokeColor=#6c8ebf;dashed=1;" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e11" edge="1" source="dim_program" target="dim_coa" style="edgeStyle=orthogonalEdgeStyle;rounded=1;strokeColor=#6c8ebf;dashed=1;" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e12" edge="1" source="dim_project" target="dim_coa" style="edgeStyle=orthogonalEdgeStyle;rounded=1;strokeColor=#6c8ebf;dashed=1;" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e13" edge="1" source="dim_grant" target="dim_coa" style="edgeStyle=orthogonalEdgeStyle;rounded=1;strokeColor=#6c8ebf;dashed=1;" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e14" edge="1" source="dim_vendor" target="fct_proc" style="edgeStyle=orthogonalEdgeStyle;rounded=1;strokeColor=#999999;" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e15" edge="1" source="dim_project" target="fct_proc" style="edgeStyle=orthogonalEdgeStyle;rounded=1;strokeColor=#999999;" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e16" edge="1" source="dim_employee" target="fct_labor" style="edgeStyle=orthogonalEdgeStyle;rounded=1;strokeColor=#999999;" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e17" edge="1" source="dim_position" target="fct_labor" style="edgeStyle=orthogonalEdgeStyle;rounded=1;strokeColor=#999999;" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e18" edge="1" source="dim_dept" target="fct_labor" style="edgeStyle=orthogonalEdgeStyle;rounded=1;strokeColor=#999999;" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e19" edge="1" source="dim_scenario" target="fct_scenario" style="edgeStyle=orthogonalEdgeStyle;rounded=1;strokeColor=#999999;" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e20" edge="1" source="dim_dept" target="fct_scenario" style="edgeStyle=orthogonalEdgeStyle;rounded=1;strokeColor=#999999;" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e21" edge="1" source="dim_acct" target="fct_scenario" style="edgeStyle=orthogonalEdgeStyle;rounded=1;strokeColor=#999999;" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e22" edge="1" source="dim_position" target="fct_scenario" style="edgeStyle=orthogonalEdgeStyle;rounded=1;strokeColor=#999999;" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e23" edge="1" source="dim_position" target="dim_employee" style="edgeStyle=orthogonalEdgeStyle;rounded=1;strokeColor=#6c8ebf;dashed=1;" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e24" edge="1" source="dim_dept" target="dim_position" style="edgeStyle=orthogonalEdgeStyle;rounded=1;strokeColor=#6c8ebf;dashed=1;" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="legend" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;" vertex="1" parent="1">
+          <mxGeometry x="20" y="650" width="350" height="90" as="geometry"/>
+        </mxCell>
+        <mxCell id="leg1" value="&lt;b&gt;Legend&lt;/b&gt;" style="text;html=1;align=left;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="30" y="655" width="60" height="20" as="geometry"/>
+        </mxCell>
+        <mxCell id="leg2" value="" style="rounded=1;fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="1">
+          <mxGeometry x="30" y="680" width="20" height="15" as="geometry"/>
+        </mxCell>
+        <mxCell id="leg2t" value="&lt;font size=1&gt;Fact Tables (measures &amp; metrics)&lt;/font&gt;" style="text;html=1;align=left;" vertex="1" parent="1">
+          <mxGeometry x="55" y="678" width="180" height="20" as="geometry"/>
+        </mxCell>
+        <mxCell id="leg3" value="" style="rounded=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+          <mxGeometry x="30" y="700" width="20" height="15" as="geometry"/>
+        </mxCell>
+        <mxCell id="leg3t" value="&lt;font size=1&gt;Dimension Tables (descriptive attributes)&lt;/font&gt;" style="text;html=1;align=left;" vertex="1" parent="1">
+          <mxGeometry x="55" y="698" width="200" height="20" as="geometry"/>
+        </mxCell>
+        <mxCell id="leg4" value="" style="rounded=1;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1">
+          <mxGeometry x="30" y="720" width="20" height="15" as="geometry"/>
+        </mxCell>
+        <mxCell id="leg4t" value="&lt;font size=1&gt;Bridge Table (connects 6 segment dimensions to facts)&lt;/font&gt;" style="text;html=1;align=left;" vertex="1" parent="1">
+          <mxGeometry x="55" y="718" width="280" height="20" as="geometry"/>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
