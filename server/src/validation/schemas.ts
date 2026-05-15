@@ -289,3 +289,52 @@ export const getRepositorySchema = z.object({
   owner: ownerSchema,
   repo: z.string().min(1).max(100).describe("Repository name"),
 });
+
+// PR Comment Schemas
+export const listPRCommentsSchema = z.object({
+  owner: ownerSchema,
+  repo: z.string().min(1).max(100).describe("Repository name"),
+  pullNumber: z.number().int().min(1).describe("Pull request number"),
+  since: z.string().optional().describe("Only comments updated after this ISO 8601 timestamp"),
+  perPage: z.number().int().min(1).max(100).default(30).describe("Results per page"),
+});
+
+export const getPRCommentSchema = z.object({
+  owner: ownerSchema,
+  repo: z.string().min(1).max(100).describe("Repository name"),
+  commentId: z.number().int().min(1).describe("Comment ID"),
+});
+
+export const createPRCommentSchema = z.object({
+  owner: ownerSchema,
+  repo: z.string().min(1).max(100).describe("Repository name"),
+  pullNumber: z.number().int().min(1).describe("Pull request number"),
+  body: z.string().min(1).max(65536).describe("Comment body (markdown supported)"),
+});
+
+export const listPRReviewCommentsSchema = z.object({
+  owner: ownerSchema,
+  repo: z.string().min(1).max(100).describe("Repository name"),
+  pullNumber: z.number().int().min(1).describe("Pull request number"),
+  since: z.string().optional().describe("Only comments updated after this ISO 8601 timestamp"),
+  perPage: z.number().int().min(1).max(100).default(30).describe("Results per page"),
+});
+
+export const createPRReviewCommentSchema = z.object({
+  owner: ownerSchema,
+  repo: z.string().min(1).max(100).describe("Repository name"),
+  pullNumber: z.number().int().min(1).describe("Pull request number"),
+  body: z.string().min(1).max(65536).describe("Comment body (markdown supported)"),
+  commitId: z.string().min(1).describe("SHA of the commit to comment on"),
+  path: z.string().min(1).max(500).describe("Relative file path to comment on"),
+  line: z.number().int().min(1).optional().describe("Line number in the diff to comment on"),
+  side: z.enum(["LEFT", "RIGHT"]).optional().describe("Side of the diff (LEFT for deletion, RIGHT for addition)"),
+});
+
+export const replyToPRReviewCommentSchema = z.object({
+  owner: ownerSchema,
+  repo: z.string().min(1).max(100).describe("Repository name"),
+  pullNumber: z.number().int().min(1).describe("Pull request number"),
+  commentId: z.number().int().min(1).describe("ID of the review comment to reply to"),
+  body: z.string().min(1).max(65536).describe("Reply body (markdown supported)"),
+});

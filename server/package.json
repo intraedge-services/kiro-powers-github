@@ -8,6 +8,9 @@
     "build": "tsc",
     "start": "node dist/index.js",
     "dev": "tsx src/index.ts",
+    "webhook": "node dist/webhook/listener.js",
+    "webhook:dev": "tsx src/webhook/listener.ts",
+    "webhook:process": "node dist/webhook/process-event.js",
     "test": "vitest run",
     "test:watch": "vitest",
     "lint": "tsc --noEmit"

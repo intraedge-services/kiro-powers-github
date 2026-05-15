@@ -10,6 +10,7 @@ import { registerWorkflowTools } from "./tools/workflows.js";
 import { registerAnalyticsTools } from "./tools/analytics.js";
 import { registerCacheTools } from "./tools/cache-tools.js";
 import { registerPullTools } from "./tools/pulls.js";
+import { registerCommentTools } from "./tools/comments.js";
 import { log } from "./utils/logger.js";
 import { readFileSync } from "node:fs";
 import { resolve } from "node:path";
@@ -87,6 +88,7 @@ async function main(): Promise<void> {
   registerAnalyticsTools(server);
   registerCacheTools(server);
   registerPullTools(server);
+  registerCommentTools(server);
 
   const transport = new StdioServerTransport();
   await server.connect(transport);
