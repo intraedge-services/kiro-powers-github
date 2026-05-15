@@ -213,7 +213,7 @@ const server = createServer(async (req: IncomingMessage, res: ServerResponse) =>
   } catch (error) {
     const message = error instanceof Error ? error.message : String(error);
     console.error(`[webhook] Error: ${message}`);
-    respond(res, 500, { error: message });
+    respond(res, 500, { error: "Internal server error" });
   }
 });
 
