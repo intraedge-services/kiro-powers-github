@@ -25,7 +25,10 @@
 
 ## Star Schema Diagram
 
-See [diagrams/star-schema-overview.drawio](diagrams/star-schema-overview.drawio) — open in [draw.io](https://app.diagrams.net) or view on GitHub.
+Open the diagram directly in draw.io:  
+👉 [**View Star Schema Diagram**](https://app.diagrams.net/?url=https://raw.githubusercontent.com/intraedge-services/kiro-powers-github/cos-files/diagrams/star-schema-overview.drawio)
+
+Or download the file: [diagrams/star-schema-overview.drawio](diagrams/star-schema-overview.drawio)
 
 ### Schema at a Glance
 
