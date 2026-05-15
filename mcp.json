@@ -24,7 +24,13 @@
         "get_pull_request",
         "list_issues",
         "list_branches",
-        "get_repository"
+        "get_repository",
+        "list_pr_comments",
+        "get_pr_comment",
+        "list_pr_review_comments",
+        "create_pr_comment",
+        "create_pr_review_comment",
+        "reply_to_pr_review_comment"
       ]
     }
   }
