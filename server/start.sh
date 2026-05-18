@@ -40,7 +40,7 @@ fi
 
 # Verify node is available
 if ! command -v node &> /dev/null; then
-  echo "ERROR: node not found. Install Node.js 20+ or ensure NVM/fnm is configured." >&2
+  echo "ERROR: node not found. Install Node.js 22+ or ensure NVM/fnm is configured." >&2
   exit 1
 fi
 

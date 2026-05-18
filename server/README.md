@@ -9,12 +9,10 @@ A Model Context Protocol (MCP) server that provides GitHub Projects V2 managemen
 - **Proactive rate limit tracking** with warnings and automatic queuing
 - **Zod input validation** on all tool parameters
 - **Exponential backoff retry** for transient errors
-- **Docker containerized** with non-root execution
 
 ## Prerequisites
 
-- Node.js 20+ (for local development)
-- Docker (for containerized deployment)
+- Node.js 22+ (Active LTS)
 - GitHub Personal Access Token with scopes: `repo`, `project`, `read:org`
 
 ## Environment Variables
@@ -33,14 +31,6 @@ A Model Context Protocol (MCP) server that provides GitHub Projects V2 managemen
 cd server
 npm install
 npm run dev
-```
-
-### Docker
-
-```bash
-cd server
-docker build -t github-projects-mcp-server .
-docker run -e GITHUB_TOKEN=$GITHUB_TOKEN github-projects-mcp-server
 ```
 
 ## Tool Reference
