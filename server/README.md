@@ -12,7 +12,7 @@ A Model Context Protocol (MCP) server that provides GitHub Projects V2 managemen
 
 ## Prerequisites
 
-- Node.js 22+ (Active LTS)
+- Node.js 24+ (Active LTS)
 - GitHub Personal Access Token with scopes: `repo`, `project`, `read:org`
 
 ## Environment Variables

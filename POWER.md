@@ -19,9 +19,9 @@ Before using the GitHub Power, ensure the following:
   - Verify by running: check if `GITHUB_TOKEN` environment variable is set
   - **CRITICAL**: If `GITHUB_TOKEN` is not set, DO NOT proceed. Guide the user to create a PAT at https://github.com/settings/tokens
 
-- **Node.js 22+** (Active LTS): Required for running the MCP server
+- **Node.js 24+** (Active LTS): Required for running the MCP server
   - Verify with: `node --version`
-  - **CRITICAL**: If Node.js is not installed or version is below 22, guide the user to install it from https://nodejs.org/
+  - **CRITICAL**: If Node.js is not installed or version is below 24, guide the user to install it from https://nodejs.org/
 
 ## Step 2: Verify MCP server connectivity
 
@@ -31,7 +31,7 @@ After installation, verify both MCP servers are accessible:
 
 If either fails, check:
 - `GITHUB_TOKEN` is set correctly
-- Node.js 22+ is installed
+- Node.js 24+ is installed
 - Network connectivity to api.github.com
 
 ## Step 3: Add hooks

@@ -14,7 +14,7 @@ Manage GitHub Projects V2 boards, issues, and workflows directly from Kiro IDE u
 
 ## Prerequisites
 
-1. **Node.js 22+** (Active LTS) — [Download](https://nodejs.org/)
+1. **Node.js 24+** (Active LTS) — [Download](https://nodejs.org/)
 2. **Kiro IDE** — [Download](https://kiro.dev/downloads/)
 3. **GitHub Personal Access Token (PAT)** with these scopes:
    - `repo` — Full repository access
