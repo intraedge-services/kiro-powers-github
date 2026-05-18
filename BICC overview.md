@@ -35,7 +35,7 @@ Oracle Fusion Cloud is a **multi-tenant SaaS** — you cannot directly query the
 
 **Use BICC when:** You need to extract large volumes of Fusion data into a data warehouse, data lake, or analytics platform.
 
-## Key Concepts
+## Terms
 
 | Term | Definition |
 |---|---|
