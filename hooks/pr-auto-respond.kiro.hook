@@ -1,12 +1,12 @@
 {
   "name": "Auto-Respond to PR Comments",
-  "version": "2.0.0",
-  "description": "Detects the current repo and branch from git, finds the associated open PR, and responds to all unanswered review comments automatically.",
+  "version": "3.0.0",
+  "description": "Detects the current repo and branch from git, finds the associated open PR, and responds to all unanswered review comments automatically using the official GitHub MCP Server.",
   "when": {
     "type": "userTriggered"
   },
   "then": {
     "type": "askAgent",
-    "prompt": "Auto-detect the PR and respond to comments. Steps: 1) Run 'git remote get-url origin' to get the GitHub remote URL. Parse owner and repo from it (handle both https://github.com/owner/repo.git and git@github.com:owner/repo.git formats). 2) Run 'git branch --show-current' to get the current branch name. 3) Use list_pull_requests with the owner/repo to find the open PR where head branch matches the current branch. If no PR found for this branch, tell the user. 4) Use get_pull_request to get full PR context (title, body, changed files). 5) Use list_pr_review_comments to get all inline review comments. 6) Use list_pr_comments to get conversation comments. 7) Build a reply chain — identify which comments already have replies by checking inReplyToId. 8) For each UNANSWERED comment: a) Read the file at the path mentioned in the comment from the local workspace. b) Understand what the reviewer is asking. c) Post a reply using reply_to_pr_review_comment for inline comments or create_pr_comment for general comments. 9) Skip trivial comments (LGTM, thanks, looks good, thumbs up emoji). Never reply to bot comments or your own previous replies. Format replies as: brief acknowledgment + explanation/justification."
+    "prompt": "Auto-detect the PR and respond to comments. Steps: 1) Run 'git remote get-url origin' to get the GitHub remote URL. Parse owner and repo from it (handle both https://github.com/owner/repo.git and git@github.com:owner/repo.git formats, also handle URLs with tokens like https://user:token@github.com/owner/repo.git). 2) Run 'git branch --show-current' to get the current branch name. 3) Use list_pull_requests with the owner/repo to find the open PR where head branch matches the current branch. If no PR found for this branch, list all open PRs and ask the user which one. 4) Use get_pull_request to get full PR context (title, body, changed files). 5) Use get_pull_request_comments to get all review comments. 6) Identify comments that haven't been replied to yet (look at comment threads). 7) For each UNANSWERED comment: a) Use get_file_contents to read the file at the path mentioned in the comment from the repo. b) Understand what the reviewer is asking or suggesting. c) Post a reply using add_issue_comment for general responses. 8) Skip trivial comments (LGTM, thanks, looks good, thumbs up emoji). Never reply to bot comments or your own previous replies. Format replies as: brief acknowledgment + explanation/justification."
   }
 }

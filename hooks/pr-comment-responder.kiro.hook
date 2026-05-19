@@ -1,12 +1,12 @@
 {
   "name": "Respond to PR Comments (Any PR)",
-  "version": "2.0.0",
+  "version": "3.0.0",
   "description": "Responds to unanswered PR comments. Auto-detects repo from git remote. Can target current branch PR or a specific PR number.",
   "when": {
     "type": "userTriggered"
   },
   "then": {
     "type": "askAgent",
-    "prompt": "Respond to PR review comments. Auto-detect the repository: 1) Run 'git remote get-url origin' and parse owner/repo from the URL (handle https and SSH formats). 2) Run 'git branch --show-current' to get the current branch. 3) Use list_pull_requests to find the open PR for this branch. If multiple PRs exist or none found, list them and ask the user which one. 4) Once PR is identified, use get_pull_request for context. 5) Use list_pr_review_comments and list_pr_comments to get all comments. 6) Identify unanswered comments (no reply in the thread). 7) For each unanswered comment: read the referenced file locally, analyze the reviewer's concern, and post a reply using reply_to_pr_review_comment or create_pr_comment. Skip acknowledgments and bot comments."
+    "prompt": "Respond to PR review comments. Auto-detect the repository: 1) Run 'git remote get-url origin' and parse owner/repo from the URL (handle https, SSH, and token-embedded formats). 2) Run 'git branch --show-current' to get the current branch. 3) Use list_pull_requests to find the open PR for this branch. If multiple PRs exist or none found, list them and ask the user which one. 4) Once PR is identified, use get_pull_request for context. 5) Use get_pull_request_comments to get all review comments. 6) Identify unanswered comments (no reply in the thread). 7) For each unanswered comment: use get_file_contents to read the referenced file, analyze the reviewer's concern, and post a reply using add_issue_comment. Skip acknowledgments and bot comments."
   }
 }
