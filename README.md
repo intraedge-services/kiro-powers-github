@@ -8,12 +8,13 @@ Manage GitHub repositories, issues, PRs, projects, and workflows directly from K
 - **PR comment auto-respond** — automatically analyze and reply to review comments
 - **AIDLC workflow integration** — sync specs to issues, update board on task completion
 - **Guided workflows** via steering files for project setup, issue management, and board management
-- **Zero build step** — remote MCP server, no local server to maintain
+- **Zero build step** — uses official pre-built Docker image, no local server to maintain
 
 ## Prerequisites
 
 1. **Kiro IDE** — [Download](https://kiro.dev/downloads/)
-2. **GitHub Personal Access Token (PAT)** with these scopes:
+2. **Docker Desktop** — [Download](https://www.docker.com/products/docker-desktop/) (runs the official GitHub MCP Server image)
+3. **GitHub Personal Access Token (PAT)** with these scopes:
    - `repo` — Full repository access
    - `project` — GitHub Projects V2 read/write
    - `read:org` — Organization project access
@@ -116,7 +117,8 @@ kiro-powers-github/
 ### MCP server shows "Connection Failed"
 - Verify `.env` file exists at the project root with your token
 - Verify the token starts with `ghp_` or `github_pat_`
-- Check network connectivity to `api.githubcopilot.com`
+- Ensure Docker is running (`docker ps`)
+- Try pulling the image manually: `docker pull ghcr.io/github/github-mcp-server`
 
 ### 401 Bad Credentials
 - Your token may have expired — regenerate at https://github.com/settings/tokens

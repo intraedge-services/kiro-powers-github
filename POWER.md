@@ -18,6 +18,10 @@ Before using the GitHub Power, ensure the following:
   - `read:org` (organization project access)
   - **CRITICAL**: If `GITHUB_TOKEN` is not set, DO NOT proceed. Guide the user to create a PAT at https://github.com/settings/tokens
 
+- **Docker Desktop**: Required to run the official GitHub MCP Server image
+  - Verify with: `docker --version`
+  - The image (`ghcr.io/github/github-mcp-server`) is pulled automatically on first use
+
 ## Step 2: Verify MCP server connectivity
 
 After installation, verify the MCP server is accessible:
@@ -25,8 +29,9 @@ After installation, verify the MCP server is accessible:
 
 If it fails, check:
 - `GITHUB_TOKEN` is set correctly in your `.env` file
+- Docker is running (`docker ps` should work)
 - The token has the required scopes
-- Network connectivity to api.githubcopilot.com
+- Network connectivity to api.github.com
 
 ## Step 3: Available hooks
 
