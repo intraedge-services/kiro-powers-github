@@ -1,6 +1,6 @@
 # Kiro Power: GitHub Project Management
 
-Manage GitHub repositories, issues, PRs, projects, and workflows directly from Kiro IDE using natural language. This Power wraps the official GitHub MCP Server (remote) and adds automated workflows via hooks and steering files.
+Manage GitHub repositories, issues, PRs, projects, and workflows directly from Kiro IDE using natural language. This Power wraps the official GitHub MCP Server (via Docker) and adds automated workflows via hooks and steering files.
 
 ## Features
 
@@ -40,7 +40,17 @@ echo "GITHUB_TOKEN=ghp_your_token_here" > .env
 
 Replace `ghp_your_token_here` with your actual GitHub PAT.
 
-### Step 3: Install the Power in Kiro
+### Step 3: Ensure Docker is running
+
+The Power uses the official GitHub MCP Server Docker image (`ghcr.io/github/github-mcp-server`). Make sure Docker Desktop is running before launching Kiro.
+
+On first use, the image will be pulled automatically (~50MB). You can pre-pull it:
+
+```bash
+docker pull ghcr.io/github/github-mcp-server
+```
+
+### Step 4: Install the Power in Kiro
 
 1. Open Kiro IDE
 2. Open the **Powers** panel (sidebar)
@@ -48,9 +58,13 @@ Replace `ghp_your_token_here` with your actual GitHub PAT.
 4. Select the `kiro-powers-github/` directory
 5. The Power will install and the MCP server will connect automatically
 
-### Step 4: Verify connection
+### Step 5: Verify connection
 
 In Kiro chat, ask: "Who am I on GitHub?" — the agent should use `get_me` and return your username.
+
+## How It Works
+
+The Power runs the official GitHub MCP Server (`ghcr.io/github/github-mcp-server`) as a Docker container using stdio transport. Kiro spawns the container, communicates via stdin/stdout, and the server handles all GitHub API calls. No custom code, no build step — GitHub maintains the server.
 
 ## Usage
 
@@ -98,7 +112,7 @@ Once installed, just talk to Kiro using natural language:
 kiro-powers-github/
 ├── POWER.md              # Power metadata and onboarding
 ├── README.md             # This file
-├── mcp.json              # MCP server configuration (remote GitHub server)
+├── mcp.json              # MCP server configuration (official GitHub MCP via Docker)
 ├── .env                  # Your GitHub token (gitignored)
 ├── steering/
 │   ├── project-setup.md
