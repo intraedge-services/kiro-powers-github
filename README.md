@@ -1,22 +1,19 @@
 # Kiro Power: GitHub Project Management
 
-Manage GitHub Projects V2 boards, issues, and workflows directly from Kiro IDE using natural language. This Power provides 36 MCP tools for complete project board management via the GitHub GraphQL API.
+Manage GitHub repositories, issues, PRs, projects, and workflows directly from Kiro IDE using natural language. This Power wraps the official GitHub MCP Server (remote) and adds automated workflows via hooks and steering files.
 
 ## Features
 
-- Create and manage GitHub Projects V2 boards
-- Add/remove/move items between columns (Backlog → Todo → In Progress → Review → Done)
-- Custom fields, iterations/sprints, and views
-- Project statistics and burndown tracking
-- File-based caching to reduce API calls
-- Proactive rate limit tracking
-- AIDLC workflow integration via hooks
+- **51+ tools** from the official GitHub MCP Server — repos, issues, PRs, projects, code search, security, notifications, and more
+- **PR comment auto-respond** — automatically analyze and reply to review comments
+- **AIDLC workflow integration** — sync specs to issues, update board on task completion
+- **Guided workflows** via steering files for project setup, issue management, and board management
+- **Zero build step** — remote MCP server, no local server to maintain
 
 ## Prerequisites
 
-1. **Node.js 24+** (Active LTS) — [Download](https://nodejs.org/)
-2. **Kiro IDE** — [Download](https://kiro.dev/downloads/)
-3. **GitHub Personal Access Token (PAT)** with these scopes:
+1. **Kiro IDE** — [Download](https://kiro.dev/downloads/)
+2. **GitHub Personal Access Token (PAT)** with these scopes:
    - `repo` — Full repository access
    - `project` — GitHub Projects V2 read/write
    - `read:org` — Organization project access
@@ -32,16 +29,7 @@ git clone https://github.com/intraedge-services/kiro-powers-github.git
 cd kiro-powers-github
 ```
 
-### Step 2: Install dependencies and build
-
-```bash
-cd server
-npm install
-npm run build
-cd ..
-```
-
-### Step 3: Create your `.env` file
+### Step 2: Create your `.env` file
 
 Create a `.env` file in the project root (this file is gitignored):
 
@@ -51,7 +39,7 @@ echo "GITHUB_TOKEN=ghp_your_token_here" > .env
 
 Replace `ghp_your_token_here` with your actual GitHub PAT.
 
-### Step 4: Install the Power in Kiro
+### Step 3: Install the Power in Kiro
 
 1. Open Kiro IDE
 2. Open the **Powers** panel (sidebar)
@@ -59,45 +47,46 @@ Replace `ghp_your_token_here` with your actual GitHub PAT.
 4. Select the `kiro-powers-github/` directory
 5. The Power will install and the MCP server will connect automatically
 
-### Step 5: Verify connection
+### Step 4: Verify connection
 
-In the **MCP Servers** panel, you should see:
-```
-power-kiro-powers-github-github-projects  Connected (36 tools) ✅
-```
+In Kiro chat, ask: "Who am I on GitHub?" — the agent should use `get_me` and return your username.
 
 ## Usage
 
 Once installed, just talk to Kiro using natural language:
 
-- "Show my GitHub projects"
-- "Create a new project called Sprint Board"
-- "Add issue #5 to the project"
-- "Move issue #5 to In Progress"
-- "What's the board status?"
-- "Show project statistics"
-- "Create an iteration Sprint-1 starting May 12 for 14 days"
+- "Show my open PRs"
+- "Respond to unanswered comments on my current PR"
+- "Create an issue titled 'Fix login bug'"
+- "What's the status of PR #14?"
+- "Search for files containing 'authentication' in my repo"
+- "Show my GitHub notifications"
+- "List code scanning alerts"
 
-## Available Tools (36)
+## Available Tools (51+)
 
 | Category | Tools |
 |---|---|
-| Project Management | create_project, list_projects, get_project, update_project, delete_project |
-| Item Management | add_item_to_project, remove_item_from_project, get_project_items, archive_item, unarchive_item, bulk_add_items, bulk_archive_items |
-| Status Transitions | update_item_status, bulk_update_status, get_status_options |
-| Custom Fields | create_field, update_item_field, get_project_fields, delete_field |
-| Iterations | create_iteration, assign_item_to_iteration, get_iteration_items, list_iterations |
-| Views | create_view, list_views, delete_view |
-| Workflows | create_auto_add_workflow, create_status_workflow, list_workflows, toggle_workflow |
-| Analytics | get_project_stats, get_iteration_burndown, get_stale_items |
-| Cache | refresh_cache, get_cache_status, clear_cache |
+| Context | get_me |
+| Repositories | create_repository, fork_repository, search_repositories, get_file_contents, create_or_update_file, delete_file, push_files |
+| Branches & Tags | create_branch, list_branches, list_tags, get_tag |
+| Issues | create_issue, get_issue, list_issues, update_issue, get_issue_comments, add_issue_comment, search_issues |
+| Pull Requests | create_pull_request, get_pull_request, list_pull_requests, update_pull_request, merge_pull_request, get_pull_request_diff, get_pull_request_files, get_pull_request_comments, get_pull_request_reviews, get_pull_request_status, update_pull_request_branch |
+| Code Reviews | create_pending_pull_request_review, add_pull_request_review_comment_to_pending_review, submit_pending_pull_request_review, delete_pending_pull_request_review, create_and_submit_pull_request_review, request_copilot_review |
+| Commits | get_commit, list_commits |
+| Code Search | search_code |
+| Users | search_users |
+| Notifications | list_notifications, get_notification_details, dismiss_notification, mark_all_notifications_read, manage_notification_subscription, manage_repository_notification_subscription |
+| Code Security | list_code_scanning_alerts, get_code_scanning_alert |
+| Secret Scanning | list_secret_scanning_alerts, get_secret_scanning_alert |
+| Copilot | assign_copilot_to_issue |
 
 ## Hooks (Automation)
 
-The Power includes 3 automation hooks in the `hooks/` directory:
-
 | Hook | Trigger | What it does |
 |---|---|---|
+| `pr-auto-respond.kiro.hook` | Manual (button click) | Auto-detects repo/branch, finds PR, responds to unanswered comments |
+| `pr-comment-responder.kiro.hook` | Manual (button click) | Same as above with fallback for any PR |
 | `aidlc-sync.kiro.hook` | After task completion | Updates project board status when AIDLC tasks complete |
 | `pr-status.kiro.hook` | Manual (button click) | Shows status of all open PRs |
 | `spec-to-issues.kiro.hook` | Manual (button click) | Creates GitHub issues from AIDLC user stories |
@@ -107,44 +96,34 @@ The Power includes 3 automation hooks in the `hooks/` directory:
 ```
 kiro-powers-github/
 ├── POWER.md              # Power metadata and onboarding
-├── mcp.json              # MCP server configuration
+├── README.md             # This file
+├── mcp.json              # MCP server configuration (remote GitHub server)
 ├── .env                  # Your GitHub token (gitignored)
 ├── steering/
 │   ├── project-setup.md
 │   ├── issue-management.md
 │   └── board-management.md
-├── hooks/
-│   ├── aidlc-sync.kiro.hook
-│   ├── pr-status.kiro.hook
-│   └── spec-to-issues.kiro.hook
-└── server/
-    ├── package.json
-    ├── tsconfig.json
-    └── src/              # TypeScript source (36 MCP tools)
+└── hooks/
+    ├── pr-auto-respond.kiro.hook
+    ├── pr-comment-responder.kiro.hook
+    ├── aidlc-sync.kiro.hook
+    ├── pr-status.kiro.hook
+    └── spec-to-issues.kiro.hook
 ```
 
 ## Troubleshooting
 
-### Server shows "Connection Failed"
+### MCP server shows "Connection Failed"
 - Verify `.env` file exists at the project root with your token
 - Verify the token starts with `ghp_` or `github_pat_`
-- Run `npm run build` in the `server/` directory
-- Remove and re-add the Power from Local Path
+- Check network connectivity to `api.githubcopilot.com`
 
 ### 401 Bad Credentials
 - Your token may have expired — regenerate at https://github.com/settings/tokens
-- Ensure the `project` scope is enabled on your token
-- Update the `.env` file with the new token and click Retry on the MCP server
+- Ensure the `repo` and `project` scopes are enabled
 
 ### Tools work but Projects V2 queries fail
-- Add the `project` scope to your PAT (required for GitHub Projects V2 GraphQL API)
-
-## Running Tests
-
-```bash
-cd server
-npm test
-```
+- Add the `project` scope to your PAT (required for GitHub Projects V2)
 
 ## License
 

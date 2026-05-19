@@ -1,12 +1,12 @@
 {
   "name": "Sync AIDLC with GitHub Project",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "description": "Updates GitHub Project board when AIDLC tasks complete. Moves issues to appropriate status columns based on workflow progress.",
   "when": {
     "type": "postTaskExecution"
   },
   "then": {
     "type": "askAgent",
-    "prompt": "A task just completed. Check if it corresponds to a GitHub issue on the project board. If so, update the issue status: move to 'In Progress' if code generation started, or 'Done' if build and test passed. Use the update_item_status tool from the github-projects MCP server."
+    "prompt": "A task just completed. Check if it corresponds to a GitHub issue on the project board. First run 'git remote get-url origin' to detect owner/repo. Then use list_issues to find issues matching the completed task. If a matching issue exists, use update_issue to update its labels or state as appropriate: add 'in-progress' label if code generation started, or close the issue if build and test passed."
   }
 }

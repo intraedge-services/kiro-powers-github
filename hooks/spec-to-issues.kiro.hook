@@ -1,12 +1,12 @@
 {
   "name": "Create Issues from Specs",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "description": "Creates GitHub issues from AIDLC user stories and adds them to the project board in Todo status.",
   "when": {
     "type": "userTriggered"
   },
   "then": {
     "type": "askAgent",
-    "prompt": "Read the user stories from aidlc-docs/inception/user-stories/stories.md. For each story that doesn't already have a corresponding GitHub issue, create one with the story title and acceptance criteria in the body. Label each issue with 'aidlc:story'. Then add all new issues to the active GitHub Project board in 'Todo' status. Use create_issue from the github server and add_item_to_project + update_item_status from the github-projects server."
+    "prompt": "Read the user stories from aidlc-docs/inception/user-stories/stories.md. First run 'git remote get-url origin' to detect owner/repo. Then use list_issues to check which stories already have corresponding GitHub issues (match by title). For each story that doesn't already have a corresponding issue, use create_issue with the story title and acceptance criteria in the body. Label each issue with 'aidlc:story'."
   }
 }

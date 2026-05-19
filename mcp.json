@@ -1,36 +1,40 @@
 {
   "mcpServers": {
-    "github-projects": {
-      "command": "node",
-      "args": ["server/dist/index.js"],
-      "env": {
-        "GITHUB_TOKEN": "${GITHUB_TOKEN}"
+    "github": {
+      "url": "https://api.githubcopilot.com/mcp/",
+      "headers": {
+        "Authorization": "Bearer ${GITHUB_TOKEN}"
       },
+      "type": "http",
       "disabled": false,
       "autoApprove": [
-        "list_projects",
-        "get_project",
-        "get_project_items",
-        "get_status_options",
-        "get_project_fields",
-        "list_views",
-        "list_workflows",
-        "list_iterations",
-        "get_project_stats",
-        "get_iteration_burndown",
-        "get_stale_items",
-        "get_cache_status",
-        "list_pull_requests",
+        "get_me",
         "get_pull_request",
+        "get_pull_request_comments",
+        "get_pull_request_diff",
+        "get_pull_request_files",
+        "get_pull_request_reviews",
+        "get_pull_request_status",
+        "get_file_contents",
+        "get_issue",
+        "get_issue_comments",
+        "list_pull_requests",
         "list_issues",
         "list_branches",
-        "get_repository",
-        "list_pr_comments",
-        "get_pr_comment",
-        "list_pr_review_comments",
-        "create_pr_comment",
-        "create_pr_review_comment",
-        "reply_to_pr_review_comment"
+        "list_commits",
+        "list_tags",
+        "list_notifications",
+        "list_code_scanning_alerts",
+        "list_secret_scanning_alerts",
+        "search_code",
+        "search_issues",
+        "search_repositories",
+        "search_users",
+        "get_commit",
+        "get_tag",
+        "get_code_scanning_alert",
+        "get_secret_scanning_alert",
+        "get_notification_details"
       ]
     }
   }
