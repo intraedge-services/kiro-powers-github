@@ -1,119 +1,132 @@
-# Kiro Power: GitHub Project Management
+# Kiro Power: GitHub
 
-Manage GitHub repositories, issues, PRs, projects, and workflows directly from Kiro IDE using natural language. This Power wraps the official GitHub MCP Server (via Docker) and adds automated workflows via hooks and steering files.
+Manage GitHub repositories, issues, PRs, Projects V2 boards, and workflows directly from Kiro IDE using natural language. This Power wraps the [official GitHub MCP Server](https://github.com/github/github-mcp-server) and adds automated workflows via hooks and steering files.
 
-## Features
+## What You Get
 
-- **51+ tools** from the official GitHub MCP Server — repos, issues, PRs, projects, code search, security, notifications, and more
-- **PR comment auto-respond** — automatically analyze and reply to review comments
-- **AIDLC workflow integration** — sync specs to issues, update board on task completion
-- **Guided workflows** via steering files for project setup, issue management, and board management
-- **Zero build step** — uses official pre-built Docker image, no local server to maintain
+- **71 tools** — repos, issues, PRs, Projects V2, code search, security alerts, notifications, Actions, discussions, and more
+- **GitHub Projects V2** — list projects, add items, move between columns (Todo → In Progress → Done)
+- **PR comment auto-respond** — analyze and reply to review comments automatically
+- **AIDLC integration** — sync specs to issues, update board status on task completion
+- **Guided workflows** — steering files for project setup, issue management, and board management
+- **Zero custom code** — uses GitHub's official pre-built Docker image, maintained by GitHub
 
 ## Prerequisites
 
-1. **Kiro IDE** — [Download](https://kiro.dev/downloads/)
-2. **Docker Desktop** — [Download](https://www.docker.com/products/docker-desktop/) (runs the official GitHub MCP Server image)
-3. **GitHub Personal Access Token (PAT)** with these scopes:
-   - `repo` — Full repository access
-   - `project` — GitHub Projects V2 read/write
-   - `read:org` — Organization project access
+| Requirement | Why | Install |
+|-------------|-----|---------|
+| **Kiro IDE** | Runs the Power | [Download](https://kiro.dev/downloads/) |
+| **Docker Desktop** | Runs the official GitHub MCP Server | [Download](https://www.docker.com/products/docker-desktop/) |
+| **GitHub PAT** | Authenticates API calls | [Create one](https://github.com/settings/tokens) |
 
-   Create one at: https://github.com/settings/tokens
+### Required PAT scopes
+
+- `repo` — Full repository access
+- `project` — GitHub Projects V2 read/write
+- `read:org` — Organization project access
 
 ## Installation
 
-### Step 1: Clone the repository
+### 1. Clone
 
 ```bash
 git clone https://github.com/intraedge-services/kiro-powers-github.git
 cd kiro-powers-github
 ```
 
-### Step 2: Create your `.env` file
+### 2. Set your GitHub token
 
-Create a `.env` file in the project root (this file is gitignored):
+Add your token to your shell profile (required for Kiro to pass it to Docker):
 
 ```bash
-echo "GITHUB_TOKEN=ghp_your_token_here" > .env
+echo 'export GITHUB_TOKEN="ghp_your_token_here"' >> ~/.zshrc
+source ~/.zshrc
 ```
 
-Replace `ghp_your_token_here` with your actual GitHub PAT.
+> **Important:** The token must be in your shell environment, not just a `.env` file. Kiro resolves `${GITHUB_TOKEN}` from the environment when spawning the Docker container.
 
-### Step 3: Ensure Docker is running
+### 3. Start Docker Desktop
 
-The Power uses the official GitHub MCP Server Docker image (`ghcr.io/github/github-mcp-server`). Make sure Docker Desktop is running before launching Kiro.
-
-On first use, the image will be pulled automatically (~50MB). You can pre-pull it:
+Ensure Docker is running. On first use, the image is pulled automatically (~50MB):
 
 ```bash
 docker pull ghcr.io/github/github-mcp-server
 ```
 
-### Step 4: Install the Power in Kiro
+### 4. Install the Power in Kiro
 
 1. Open Kiro IDE
 2. Open the **Powers** panel (sidebar)
 3. Click **"Add power from Local Path"**
 4. Select the `kiro-powers-github/` directory
-5. The Power will install and the MCP server will connect automatically
+5. The MCP server connects automatically
 
-### Step 5: Verify connection
+### 5. Verify
 
-In Kiro chat, ask: "Who am I on GitHub?" — the agent should use `get_me` and return your username.
+In Kiro chat, type: **"Who am I on GitHub?"**
 
-## How It Works
-
-The Power runs the official GitHub MCP Server (`ghcr.io/github/github-mcp-server`) as a Docker container using stdio transport. Kiro spawns the container, communicates via stdin/stdout, and the server handles all GitHub API calls. No custom code, no build step — GitHub maintains the server.
+You should see your GitHub username returned. If not, see [Troubleshooting](#troubleshooting).
 
 ## Usage
 
-Once installed, just talk to Kiro using natural language:
+Just talk to Kiro in natural language:
 
-- "Show my open PRs"
-- "Respond to unanswered comments on my current PR"
-- "Create an issue titled 'Fix login bug'"
-- "What's the status of PR #14?"
-- "Search for files containing 'authentication' in my repo"
-- "Show my GitHub notifications"
-- "List code scanning alerts"
+```
+Show my open PRs
+Create an issue titled "Add retry logic" in intraedge-services/my-repo
+List projects for intraedge-services
+Move issue #24 to "In Progress" on the Kiro E2E Validation Board
+Respond to unanswered comments on my current PR
+Show code scanning alerts for my repo
+What are my GitHub notifications?
+```
 
-## Available Tools (51+)
+## How It Works
 
-| Category | Tools |
-|---|---|
-| Context | get_me |
-| Repositories | create_repository, fork_repository, search_repositories, get_file_contents, create_or_update_file, delete_file, push_files |
-| Branches & Tags | create_branch, list_branches, list_tags, get_tag |
-| Issues | create_issue, get_issue, list_issues, update_issue, get_issue_comments, add_issue_comment, search_issues |
-| Pull Requests | create_pull_request, get_pull_request, list_pull_requests, update_pull_request, merge_pull_request, get_pull_request_diff, get_pull_request_files, get_pull_request_comments, get_pull_request_reviews, get_pull_request_status, update_pull_request_branch |
-| Code Reviews | create_pending_pull_request_review, add_pull_request_review_comment_to_pending_review, submit_pending_pull_request_review, delete_pending_pull_request_review, create_and_submit_pull_request_review, request_copilot_review |
-| Commits | get_commit, list_commits |
-| Code Search | search_code |
-| Users | search_users |
-| Notifications | list_notifications, get_notification_details, dismiss_notification, mark_all_notifications_read, manage_notification_subscription, manage_repository_notification_subscription |
-| Code Security | list_code_scanning_alerts, get_code_scanning_alert |
-| Secret Scanning | list_secret_scanning_alerts, get_secret_scanning_alert |
-| Copilot | assign_copilot_to_issue |
+```
+Kiro IDE → spawns Docker container → official GitHub MCP Server (stdio)
+                                          ↓
+                                    GitHub REST + GraphQL APIs
+```
+
+The Power runs `ghcr.io/github/github-mcp-server` with `GITHUB_TOOLSETS=all` to enable all 71 tools including Projects V2. Communication happens over stdin/stdout (MCP stdio transport). No network ports, no custom server code.
+
+## Available Tools (71)
+
+| Category | Key Tools |
+|----------|-----------|
+| **Projects V2** | projects_list, projects_get, projects_write (add items, update fields, move status) |
+| **Issues** | issue_write (create/update), issue_read, list_issues, search_issues, add_issue_comment |
+| **Pull Requests** | pull_request_read (get, diff, files, comments, reviews, status), create_pull_request, merge_pull_request, update_pull_request |
+| **Code Reviews** | pull_request_review_write, add_comment_to_pending_review, add_reply_to_pull_request_comment |
+| **Repositories** | create_repository, get_file_contents, push_files, create_or_update_file, get_repository_tree |
+| **Branches & Tags** | create_branch, list_branches, list_tags |
+| **Commits** | get_commit, list_commits |
+| **Code Search** | search_code, search_repositories |
+| **Actions** | actions_list, actions_get, actions_run_trigger, get_job_logs |
+| **Security** | list_code_scanning_alerts, list_secret_scanning_alerts, list_dependabot_alerts |
+| **Notifications** | list_notifications, dismiss_notification, mark_all_notifications_read |
+| **Discussions** | list_discussions, get_discussion, get_discussion_comments |
+| **Copilot** | assign_copilot_to_issue, request_copilot_review |
+| **Users & Teams** | get_me, search_users, get_teams, get_team_members |
 
 ## Hooks (Automation)
 
 | Hook | Trigger | What it does |
-|---|---|---|
-| `pr-auto-respond.kiro.hook` | Manual (button click) | Auto-detects repo/branch, finds PR, responds to unanswered comments |
-| `pr-comment-responder.kiro.hook` | Manual (button click) | Same as above with fallback for any PR |
-| `aidlc-sync.kiro.hook` | After task completion | Updates project board status when AIDLC tasks complete |
-| `pr-status.kiro.hook` | Manual (button click) | Shows status of all open PRs |
-| `spec-to-issues.kiro.hook` | Manual (button click) | Creates GitHub issues from AIDLC user stories |
+|------|---------|--------------|
+| `pr-auto-respond` | Manual (click) | Detects repo/branch, finds PR, responds to unanswered review comments |
+| `pr-comment-responder` | Manual (click) | Same with fallback for any PR |
+| `pr-status` | Manual (click) | Shows status of all open PRs |
+| `aidlc-sync` | After task completion | Updates project board when AIDLC tasks complete |
+| `spec-to-issues` | Manual (click) | Creates GitHub issues from AIDLC user stories |
 
 ## Project Structure
 
 ```
 kiro-powers-github/
-├── POWER.md              # Power metadata and onboarding
+├── POWER.md              # Power metadata and onboarding instructions
 ├── README.md             # This file
-├── mcp.json              # MCP server configuration (official GitHub MCP via Docker)
-├── .env                  # Your GitHub token (gitignored)
+├── mcp.json              # MCP server config (official GitHub MCP via Docker)
 ├── steering/
 │   ├── project-setup.md
 │   ├── issue-management.md
@@ -128,18 +141,42 @@ kiro-powers-github/
 
 ## Troubleshooting
 
-### MCP server shows "Connection Failed"
-- Verify `.env` file exists at the project root with your token
-- Verify the token starts with `ghp_` or `github_pat_`
-- Ensure Docker is running (`docker ps`)
-- Try pulling the image manually: `docker pull ghcr.io/github/github-mcp-server`
+### "Connection Failed" or server not starting
+
+1. Is Docker running? → `docker ps` should work
+2. Can you pull the image? → `docker pull ghcr.io/github/github-mcp-server`
+3. Is `GITHUB_TOKEN` in your environment? → `echo $GITHUB_TOKEN` should show your token
+4. Did you restart Kiro after adding the token to `~/.zshrc`?
 
 ### 401 Bad Credentials
-- Your token may have expired — regenerate at https://github.com/settings/tokens
-- Ensure the `repo` and `project` scopes are enabled
 
-### Tools work but Projects V2 queries fail
-- Add the `project` scope to your PAT (required for GitHub Projects V2)
+- Token expired → regenerate at https://github.com/settings/tokens
+- Token not in environment → add `export GITHUB_TOKEN="ghp_..."` to `~/.zshrc`, then restart Kiro
+- Wrong scopes → ensure `repo`, `project`, `read:org` are enabled
+
+### Projects V2 operations fail
+
+- Ensure your PAT has the `project` scope
+- Use `owner_type: "org"` when working with organization projects
+
+### Server disconnects between calls
+
+- This can happen if Docker Desktop goes to sleep. Keep Docker running while using Kiro.
+- Reconnect from the MCP Servers panel (right-click → Reconnect)
+
+## Team Onboarding Checklist
+
+For new team members setting up this Power:
+
+- [ ] Install [Docker Desktop](https://www.docker.com/products/docker-desktop/) and ensure it's running
+- [ ] Create a [GitHub PAT](https://github.com/settings/tokens) with scopes: `repo`, `project`, `read:org`
+- [ ] Add token to shell: `echo 'export GITHUB_TOKEN="ghp_..."' >> ~/.zshrc && source ~/.zshrc`
+- [ ] Clone this repo: `git clone https://github.com/intraedge-services/kiro-powers-github.git`
+- [ ] Pre-pull Docker image: `docker pull ghcr.io/github/github-mcp-server`
+- [ ] Open Kiro → Powers panel → "Add power from Local Path" → select the cloned directory
+- [ ] Verify: type "Who am I on GitHub?" in Kiro chat
+
+Total setup time: ~5 minutes.
 
 ## License
 
