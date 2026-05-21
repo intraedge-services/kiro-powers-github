@@ -1,18 +1,25 @@
-# COS Line of Business — Operations, Key Metrics & Requirements Mapping
+# City of Scottsdale — Business Operations, Key Metrics & Requirements Mapping
 
-> This document explains how the City/County Organization Services (COS) operates,
+> This document explains how the City of Scottsdale (COS) operates,
 > what metrics executives care about, and how each requirement maps to their business needs.
 
 ---
 
 ## What is COS?
 
-**COS (City/County Organization Services)** is a public-sector government entity (city or county) that delivers services to citizens funded by taxpayer revenue, grants, and fees. Unlike private companies that optimize for profit, COS optimizes for:
+**COS (City of Scottsdale)** is a municipal government in Maricopa County, Arizona, operating under a Council-Manager form of government. The city delivers services to ~250,000 residents funded by property taxes, sales taxes, state-shared revenues, federal/state grants, and user fees.
+
+- **Fiscal Year:** July 1 – June 30
+- **Total Budget (FY2024/25):** ~$2.3 billion (operating + capital)
+- **Governance:** Mayor + 6 Council Members → City Manager → Department Directors
+- **Website:** [scottsdaleaz.gov](https://www.scottsdaleaz.gov)
+
+Unlike private companies that optimize for profit, the City of Scottsdale optimizes for:
 
 - **Service delivery** within legally adopted budgets
-- **Fiscal accountability** to elected officials and citizens
-- **Compliance** with grant restrictions, labor agreements, and procurement regulations
-- **Sustainability** — maintaining services across multi-year fiscal cycles
+- **Fiscal accountability** to City Council and residents
+- **Compliance** with grant restrictions, labor agreements, and Arizona Revised Statutes
+- **Sustainability** — maintaining services across multi-year fiscal cycles while managing growth
 
 ---
 
@@ -20,16 +27,17 @@
 
 ### Revenue Sources
 ```
-┌─────────────────────────────────────────────────────────┐
-│                    COS Revenue                           │
-├──────────────┬──────────────┬──────────────┬────────────┤
-│ Property Tax │ Sales Tax    │ Federal/State│ Fees &     │
-│ (40%)        │ (25%)        │ Grants (20%) │ Charges    │
-│              │              │              │ (15%)      │
-│ Predictable  │ Volatile     │ Restricted   │ Variable   │
-│ Annual       │ Monthly      │ Time-limited │ Service-   │
-│              │              │              │ based      │
-└──────────────┴──────────────┴──────────────┴────────────┘
+┌──────────────────────────────────────────────────────────────────┐
+│              City of Scottsdale Revenue (~$2.3B)                  │
+├────────────────┬───────────────┬───────────────┬─────────────────┤
+│ Local Sales    │ Property Tax  │ State Shared  │ Charges, Fees   │
+│ Tax (largest)  │ (primary +    │ Revenue       │ & Grants        │
+│                │ secondary)    │ (income tax,  │ (water, permits,│
+│ Transaction-   │ $0.4958/$100  │ sales tax     │ federal/state   │
+│ based,         │ assessed +    │ distribution) │ grants)         │
+│ volatile to    │ $0.4358/$100  │               │                 │
+│ economy        │ bond debt     │ Declining     │ Restricted use  │
+└────────────────┴───────────────┴───────────────┴─────────────────┘
 ```
 
 ### Expenditure Structure
@@ -52,40 +60,48 @@
 
 ### Organizational Structure
 ```
-City Manager / County Administrator
-├── CFO / Finance Director
-│   ├── Budget Office
-│   ├── Accounting / Controller
-│   ├── Treasury
-│   └── Procurement
-├── COO / Assistant City Manager
-│   ├── Public Works
-│   ├── Parks & Recreation
-│   ├── Community Development
-│   └── Utilities
-├── Public Safety Chief
-│   ├── Police
-│   ├── Fire
-│   └── Emergency Management
-├── HR Director
-│   ├── Compensation & Benefits
-│   ├── Recruiting
-│   └── Labor Relations
-└── IT Director
-    ├── Infrastructure
-    └── Applications
+City Council (Mayor + 6 Members)
+└── City Manager
+    ├── City Attorney
+    ├── City Auditor
+    ├── City Clerk
+    ├── City Treasurer
+    ├── Assistant City Manager
+    │   ├── Police Department
+    │   ├── Fire Department
+    │   ├── Transportation & Infrastructure (roads, traffic, fleet)
+    │   ├── Planning & Development Services
+    │   ├── Human Services & Library
+    │   ├── Parks & Recreation and Preserve
+    │   ├── Water Resources
+    │   └── Enterprise Operations (airport, Scottsdale Stadium)
+    ├── Finance & Budget
+    │   ├── Budget Office
+    │   ├── Accounting & Financial Reporting
+    │   ├── Procurement
+    │   └── Treasury
+    ├── Human Resources
+    │   ├── Compensation & Benefits
+    │   ├── Recruiting & Talent
+    │   └── Labor Relations
+    └── Information Technology
+        ├── Infrastructure & Security
+        └── Applications & Analytics
 ```
 
-### Budget Cycle (Annual)
+### Budget Cycle (Annual — Arizona Revised Statutes)
 ```
-Jul-Sep: Budget Development (departments submit requests)
-Oct-Nov: Executive Review (CFO/Manager prioritize)
-Dec-Jan: Council/Board Workshops (elected officials review)
-Feb-Mar: Public Hearings (citizen input)
-Apr-May: Adoption (legally binding appropriation)
-Jun:     Year-End Close (encumbrance rollover decisions)
+Jul-Sep: Budget Development (departments submit requests to Budget Office)
+Oct-Nov: City Manager Review (prioritize with Finance Director)
+Dec-Jan: Council Work Sessions (elected officials review priorities)
+Feb-Mar: Tentative Budget Published (public review period)
+Apr:     Public Hearings (citizen input per ARS requirements)
+May-Jun: Council Adoption (legally binding appropriation)
+Jun 30:  Fiscal Year End (encumbrance rollover decisions)
 Jul 1:   New Fiscal Year Begins
 ```
+
+**Key Arizona requirement:** Cities must adopt a balanced budget — expenditures cannot exceed revenues + fund balance.
 
 ---
 

@@ -1,8 +1,9 @@
-# COS — Consolidated Oracle Source → Data Warehouse Mapping
+# COS — City of Scottsdale: Oracle Source → Data Warehouse Mapping
 
-> **Purpose:** Single source of truth mapping Oracle Fusion BICC PVOs and Amorphic sources to a Kimball-style star schema (dimensions and facts) for the Executive Financial Dashboard.  
+> **Purpose:** Single source of truth mapping Oracle Fusion BICC PVOs and Amorphic sources to a Kimball-style star schema (dimensions and facts) for the City of Scottsdale Executive Financial Dashboard.  
 > **Oracle Release:** 25D  
 > **Target Platform:** Snowflake  
+> **Entity:** City of Scottsdale, AZ (Fiscal Year: Jul 1 – Jun 30)
 
 ---
 
@@ -20,6 +21,8 @@
 | 8 | [Bus Matrix with PVO Source Annotations.md](Bus%20Matrix%20with%20PVO%20Source%20Annotations.md) | Bus matrix showing which dimensions apply to which facts |
 | 9 | [Executive Decision Traceability.md](Executive%20Decision%20Traceability.md) | Executive decisions → datasets → PVOs → facts/dims needed |
 | 10 | [Sample Data Flow Lineage.md](Sample%20Data%20Flow%20Lineage.md) | Concrete examples: Fact → Bridge → Dimension with sample data |
+| 11 | [COS Business Overview.md](COS%20Business%20Overview.md) | City of Scottsdale operations, key metrics, and requirements mapping |
+| 12 | [Decision Reconciliation Queries.md](Decision%20Reconciliation%20Queries.md) | SQL queries to derive and reconcile all 28 decision metrics |
 
 ---
 
