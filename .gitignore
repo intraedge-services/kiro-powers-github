@@ -14,8 +14,6 @@ Thumbs.db
 # Node modules (if applicable)
 node_modules/
 dist/
-projects-server/node_modules/
-projects-server/dist/
 
 # IDE files
 .vscode/

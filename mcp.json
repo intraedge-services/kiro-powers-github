@@ -2,7 +2,7 @@
   "mcpServers": {
     "github": {
       "command": "docker",
-      "args": ["run", "-i", "--rm", "-e", "GITHUB_PERSONAL_ACCESS_TOKEN", "ghcr.io/github/github-mcp-server"],
+      "args": ["run", "-i", "--rm", "-e", "GITHUB_PERSONAL_ACCESS_TOKEN", "--env", "GITHUB_TOOLSETS=all", "ghcr.io/github/github-mcp-server"],
       "env": {
         "GITHUB_PERSONAL_ACCESS_TOKEN": "${GITHUB_TOKEN}"
       },
@@ -22,21 +22,9 @@
         "get_commit",
         "search_code",
         "search_repositories",
-        "add_reply_to_pull_request_comment"
-      ]
-    },
-    "github-projects": {
-      "command": "./start-projects-server.sh",
-      "args": [],
-      "env": {
-        "GITHUB_TOKEN": "${GITHUB_TOKEN}"
-      },
-      "disabled": false,
-      "autoApprove": [
-        "list_projects",
-        "get_project",
-        "list_project_items",
-        "get_project_status_options"
+        "add_reply_to_pull_request_comment",
+        "projects_list",
+        "projects_get"
       ]
     }
   }
