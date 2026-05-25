@@ -103,6 +103,11 @@ City Council (Mayor + 6 Members)
     │   └── Cross-departmental projects & performance management
     ├── Police Department — Chief Joe LeDuc
     ├── Fire Department — Chief Tom Shannon
+    ├── Information Technology — CIO Bianca Lochner (#1 Digital City in US)
+    │   ├── Applications & Digital Services
+    │   ├── Infrastructure & Cloud
+    │   ├── Cybersecurity (CISO)
+    │   └── Data & Analytics
     ├── Transportation & Infrastructure
     ├── Planning & Development Services
     └── Water Resources
@@ -112,6 +117,7 @@ City Council (Mayor + 6 Members)
 > **Police Chief:** [KTAR News, Apr 2025](https://ktar.com/arizona-news/city-scottsdale-police-chief/5696824/)
 > **Fire Chief:** [Hoodline, Oct 2025](https://hoodline.com/2025/10/scottsdale-city-council-approves-commitment-to-top-tier-police-and-firefighter-pay/)
 > **City Treasurer:** [GFOA Bio](https://www.gfoa.org/bio/andrews)
+> **CIO:** [Public Sector Network](https://publicsectornetwork.com/insight/digital-arizona-transforming-citizen-services-through-innovation) — Bianca Lochner, #1 Digital City (Center for Digital Government)
 
 ### Budget Cycle (Annual — Arizona Revised Statutes)
 ```
