@@ -30,7 +30,7 @@ Manage GitHub repositories, issues, PRs, Projects V2 boards, and workflows direc
 ### 1. Clone
 
 ```bash
-git clone https://github.com/intraedge-services/kiro-powers-github.git
+git clone https://github.com/<your-org>/kiro-powers-github.git
 cd kiro-powers-github
 ```
 
@@ -73,13 +73,22 @@ Just talk to Kiro in natural language:
 
 ```
 Show my open PRs
-Create an issue titled "Add retry logic" in intraedge-services/my-repo
-List projects for intraedge-services
+Create an issue titled "Add retry logic" in my-org/my-repo
+List projects for my-org
 Move issue #24 to "In Progress" on the Kiro E2E Validation Board
 Respond to unanswered comments on my current PR
 Show code scanning alerts for my repo
-What are my GitHub notifications?
 ```
+
+### Organization vs Personal Projects
+
+The steering files instruct Kiro to detect your organization automatically using `get_teams` and default to org-level project lookups. If you need to work with personal projects, specify explicitly:
+
+```
+List my personal projects
+```
+
+> **Why?** GitHub Projects V2 separates user and org namespaces. Without specifying `owner_type: "org"`, the API searches personal projects only — which won't find org-level boards. The steering files handle this automatically by detecting your org first.
 
 ## How It Works
 
@@ -105,7 +114,6 @@ The Power runs `ghcr.io/github/github-mcp-server` with `GITHUB_TOOLSETS=all` to 
 | **Code Search** | search_code, search_repositories |
 | **Actions** | actions_list, actions_get, actions_run_trigger, get_job_logs |
 | **Security** | list_code_scanning_alerts, list_secret_scanning_alerts, list_dependabot_alerts |
-| **Notifications** | list_notifications, dismiss_notification, mark_all_notifications_read |
 | **Discussions** | list_discussions, get_discussion, get_discussion_comments |
 | **Copilot** | assign_copilot_to_issue, request_copilot_review |
 | **Users & Teams** | get_me, search_users, get_teams, get_team_members |
@@ -171,7 +179,7 @@ For new team members setting up this Power:
 - [ ] Install [Docker Desktop](https://www.docker.com/products/docker-desktop/) and ensure it's running
 - [ ] Create a [GitHub PAT](https://github.com/settings/tokens) with scopes: `repo`, `project`, `read:org`
 - [ ] Add token to shell: `echo 'export GITHUB_TOKEN="ghp_..."' >> ~/.zshrc && source ~/.zshrc`
-- [ ] Clone this repo: `git clone https://github.com/intraedge-services/kiro-powers-github.git`
+- [ ] Clone this repo: `git clone https://github.com/<your-org>/kiro-powers-github.git`
 - [ ] Pre-pull Docker image: `docker pull ghcr.io/github/github-mcp-server`
 - [ ] Open Kiro → Powers panel → "Add power from Local Path" → select the cloned directory
 - [ ] Verify: type "Who am I on GitHub?" in Kiro chat

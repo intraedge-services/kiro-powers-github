@@ -1,5 +1,16 @@
 # Issue Management Workflow
 
+## Default Context
+
+When the user references issues or repositories without specifying an owner:
+1. Call `get_teams` to detect the user's organization(s)
+2. Use the detected org as the default owner
+3. If multiple orgs exist, ask the user which one to use
+4. When adding issues to project boards, always use `owner_type: "org"` for org-owned projects
+5. Infer the repo from the current workspace (check git remote) when possible
+
+---
+
 ## Creating Issues
 
 When the user wants to create issues:
