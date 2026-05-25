@@ -29,7 +29,7 @@
 ## Star Schema Diagram
 
 Open the diagram directly in draw.io:  
-👉 [**View Star Schema Diagram**](https://app.diagrams.net/?url=https://raw.githubusercontent.com/intraedge-services/kiro-powers-github/cos-files/diagrams/star-schema-overview.drawio)
+👉 [**View Star Schema Diagram**](https://app.diagrams.net/#Uhttps%3A%2F%2Fraw.githubusercontent.com%2Fintraedge-services%2Fdnilesh-poc-data-pipeline%2Ffeature%2Fcos-business-overview%2Fdiagrams%2Fstar-schema-overview.drawio)
 
 Or download the file: [diagrams/star-schema-overview.drawio](diagrams/star-schema-overview.drawio)
 
