@@ -10,9 +10,20 @@
 **COS (City of Scottsdale)** is a municipal government in Maricopa County, Arizona, operating under a Council-Manager form of government. The city delivers services to ~250,000 residents funded by property taxes, sales taxes, state-shared revenues, federal/state grants, and user fees.
 
 - **Fiscal Year:** July 1 – June 30
-- **Total Budget (FY2024/25):** ~$2.3 billion (operating + capital)
+- **Total Budget (FY2025/26):** ~$2.2 billion (operating $885M + capital $948M + contingencies $371M)
+- **Prior Year Budget (FY2024/25):** ~$2.3 billion
+- **Workforce:** ~2,800 employees
+- **Population Served:** ~250,000 residents
 - **Governance:** Mayor + 6 Council Members → City Manager → Department Directors
+- **City Manager:** Jim Thompson
 - **Website:** [scottsdaleaz.gov](https://www.scottsdaleaz.gov)
+- **Forbes Recognition:** Named Arizona's Top Public Employer (2025)
+
+**Sources:**
+- [City of Scottsdale FY2025/26 Budget Adoption](https://hoodline.com/2025/06/SCOTTSDALE-CITY-COUNCIL-ADOPTS-2-2B-BUDGET-PRIORITIZES-CORE-SERVICES-AND-COMMUNITY-INVESTMENTS/) — $2.204B total, 4% decrease from prior year
+- [City of Scottsdale Finance & Budget](https://www.scottsdaleaz.gov/finance/budget) — Official budget department page
+- [City of Scottsdale Financial Reports](https://www.scottsdaleaz.gov/finance/financial-reports) — ACFR for FY ended June 30, 2025
+- [Scottsdale Workforce](https://newsroom.cigna.com/how-the-city-of-scottsdale-built-a-world-class-culture-of-employee-health-and-wellness) — ~2,600-2,800 employees
 
 Unlike private companies that optimize for profit, the City of Scottsdale optimizes for:
 
@@ -59,9 +70,13 @@ Unlike private companies that optimize for profit, the City of Scottsdale optimi
 ```
 
 ### Organizational Structure
+
+> Source: [City Manager Staff Biographies](https://www.scottsdaleaz.gov/city-manager/city-manager-staff-biographies)
+> The City Manager oversees Police, Fire, Transportation & Infrastructure, Planning & Development Services, Human Services & Library, Parks & Recreation and Preserve, Water Resources, and Enterprise Operations.
+
 ```
 City Council (Mayor + 6 Members)
-└── City Manager
+└── City Manager (Jim Thompson)
     ├── City Attorney
     ├── City Auditor
     ├── City Clerk
@@ -74,7 +89,7 @@ City Council (Mayor + 6 Members)
     │   ├── Human Services & Library
     │   ├── Parks & Recreation and Preserve
     │   ├── Water Resources
-    │   └── Enterprise Operations (airport, Scottsdale Stadium)
+    │   └── Enterprise Operations (Airport, WestWorld, Stadium, Railroad Park)
     ├── Finance & Budget
     │   ├── Budget Office
     │   ├── Accounting & Financial Reporting
@@ -416,3 +431,43 @@ Constraints Applied:
 │ & Accountability        │     │ D22, D25         │     │ Org Hierarchy       │
 └─────────────────────────┘     └──────────────────┘     └─────────────────────┘
 ```
+
+
+---
+
+## Sources & References
+
+| # | Source | URL | Data Used |
+|---|--------|-----|-----------|
+| 1 | City of Scottsdale — Finance & Budget | https://www.scottsdaleaz.gov/finance/budget | Budget process, department responsibilities |
+| 2 | City of Scottsdale — Financial Reports (ACFR) | https://www.scottsdaleaz.gov/finance/financial-reports | FY2025 audited financials, fund structure |
+| 3 | City of Scottsdale — City Manager | https://www.scottsdaleaz.gov/city-manager | Organizational structure, department oversight |
+| 4 | City of Scottsdale — City Manager Staff Bios | https://www.scottsdaleaz.gov/city-manager/city-manager-staff-biographies | Department list under City Manager |
+| 5 | City of Scottsdale — Government 101 | https://scottsdaleaz.gov/city-government-101 | Council-Manager form, boards & commissions |
+| 6 | Scottsdale FY2025/26 Budget Adoption (Hoodline) | https://hoodline.com/2025/06/SCOTTSDALE-CITY-COUNCIL-ADOPTS-2-2B-BUDGET-PRIORITIZES-CORE-SERVICES-AND-COMMUNITY-INVESTMENTS/ | $2.204B total, 4% decrease, budget breakdown |
+| 7 | Scottsdale Budget Panel (scottsdale.org) | https://www.scottsdale.org/city_news/city-of-scottsdale-overall-budget-down-operating-budget-up/article_abc5ab99-32ca-4e6f-bc2a-d49594de4164.html | Operating budget $762M→$811M |
+| 8 | Scottsdale Tentative Budget (yourvalley.net) | https://www.yourvalley.net/stories/scottsdale-city-council-approves-tentative-2025-26-budget,585581 | $885M operating, $948M capital, $371M contingencies |
+| 9 | Scottsdale Property Tax Rates (citysuntimes.com) | https://www.citysuntimes.com/news/government/scottsdale-reduces-its-budget-and-property-taxes-with-a-cautious-eye-toward-the-year-ahead/article_3af5be7a-4916-11ef-a0ae-87c72b9b90d7.html | Primary rate $0.4958, secondary $0.4358 per $100 |
+| 10 | Scottsdale Workforce (Cigna) | https://newsroom.cigna.com/how-the-city-of-scottsdale-built-a-world-class-culture-of-employee-health-and-wellness | ~2,600 employees, wellness culture |
+| 11 | Scottsdale Top Public Employer (Hoodline) | https://hoodline.com/2025/10/scottsdale-named-arizona-s-top-public-employer-by-forbes-surpasses-phoenix-in-prestigious-ranking/ | ~2,800 workforce, Forbes recognition |
+| 12 | Scottsdale Enterprise Operations (eastvalleytribune) | https://www.eastvalleytribune.com/manager-makes-promotions-deletes-post/article_d3ee9a2e-c167-57c3-b306-ab5a9b01fe94.html | Airport, WestWorld, Railroad Park, Stadium under Enterprise Ops |
+
+---
+
+## Data Validation Notes
+
+| Claim in Document | Verified Value | Source |
+|-------------------|---------------|--------|
+| Total Budget FY2025/26 | $2.204 billion | Source #6 |
+| Prior Year FY2024/25 | $2.295 billion | Source #6 |
+| Operating Budget FY2025/26 | $885.2 million | Source #8 |
+| Capital Budget FY2025/26 | $947.7 million | Source #8 |
+| Workforce size | ~2,600–2,800 employees | Sources #10, #11 |
+| Fiscal Year | Jul 1 – Jun 30 | Source #2 (ACFR for year ended June 30) |
+| Governance | Council-Manager | Source #5 |
+| Property Tax (primary) | $0.4958 per $100 assessed | Source #9 |
+| Property Tax (secondary/bonds) | $0.4358 per $100 assessed | Source #9 |
+| Departments under City Manager | Police, Fire, T&I, P&D, Human Services, Parks, Water, Enterprise | Source #4 |
+| Enterprise Operations includes | Airport, WestWorld, Stadium, Railroad Park | Source #12 |
+
+*Content was rephrased for compliance with licensing restrictions. All figures are from publicly available government and news sources.*
