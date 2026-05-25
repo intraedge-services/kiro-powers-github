@@ -15,7 +15,7 @@
 - **Workforce:** ~2,800 employees
 - **Population Served:** ~250,000 residents
 - **Governance:** Mayor + 6 Council Members → City Manager → Department Directors
-- **City Manager:** Jim Thompson
+- **City Manager:** Greg Caton (ICMA Credentialed Manager)
 - **Website:** [scottsdaleaz.gov](https://www.scottsdaleaz.gov)
 - **Forbes Recognition:** Named Arizona's Top Public Employer (2025)
 
@@ -76,33 +76,37 @@ Unlike private companies that optimize for profit, the City of Scottsdale optimi
 
 ```
 City Council (Mayor + 6 Members)
-└── City Manager (Jim Thompson)
+└── City Manager — Greg Caton (ICMA Credentialed)
     ├── City Attorney
     ├── City Auditor
     ├── City Clerk
-    ├── City Treasurer
-    ├── Assistant City Manager
-    │   ├── Police Department
-    │   ├── Fire Department
-    │   ├── Transportation & Infrastructure (roads, traffic, fleet)
-    │   ├── Planning & Development Services
-    │   ├── Human Services & Library
-    │   ├── Parks & Recreation and Preserve
-    │   ├── Water Resources
-    │   └── Enterprise Operations (Airport, WestWorld, Stadium, Railroad Park)
-    ├── Finance & Budget
-    │   ├── Budget Office
-    │   ├── Accounting & Financial Reporting
-    │   ├── Procurement
-    │   └── Treasury
-    ├── Human Resources
-    │   ├── Compensation & Benefits
-    │   ├── Recruiting & Talent
-    │   └── Labor Relations
-    └── Information Technology
-        ├── Infrastructure & Security
-        └── Applications & Analytics
+    ├── City Treasurer / CFO — Sonia Andrews (oversees Budget & Finance)
+    ├── Deputy City Manager — Judy Doyle
+    │   ├── Aviation (Scottsdale Airport)
+    │   ├── Economic Development
+    │   ├── Human Resources
+    │   ├── Parks & Recreation
+    │   ├── McDowell Sonoran Preserve
+    │   ├── Scottsdale Stadium
+    │   ├── Tourism & Events
+    │   └── WestWorld
+    ├── Deputy City Manager — Kira Peters
+    │   ├── (Portfolio TBD — community-focused departments)
+    │   └── ...
+    ├── Assistant to City Manager — Will Brooks
+    │   └── Cross-departmental projects & performance management
+    ├── Police Department — Chief Joe LeDuc
+    ├── Fire Department — Chief Tom Shannon
+    ├── Transportation & Infrastructure
+    ├── Planning & Development Services
+    ├── Human Services & Library
+    └── Water Resources
 ```
+
+> **Source:** [City Manager Staff Biographies](https://www.scottsdaleaz.gov/city-manager/city-manager-staff-biographies) (last updated May 21, 2026)
+> **Police Chief:** [KTAR News, Apr 2025](https://ktar.com/arizona-news/city-scottsdale-police-chief/5696824/)
+> **Fire Chief:** [Hoodline, Oct 2025](https://hoodline.com/2025/10/scottsdale-city-council-approves-commitment-to-top-tier-police-and-firefighter-pay/)
+> **City Treasurer:** [GFOA Bio](https://www.gfoa.org/bio/andrews)
 
 ### Budget Cycle (Annual — Arizona Revised Statutes)
 ```
