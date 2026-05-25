@@ -81,6 +81,10 @@ City Council (Mayor + 6 Members)
     ├── City Auditor
     ├── City Clerk
     ├── City Treasurer / CFO — Sonia Andrews (oversees Budget & Finance)
+    │   ├── Budget Office
+    │   ├── Accounting & Financial Reporting
+    │   ├── Procurement
+    │   └── Treasury
     ├── Deputy City Manager — Judy Doyle
     │   ├── Aviation (Scottsdale Airport)
     │   ├── Economic Development
@@ -91,15 +95,16 @@ City Council (Mayor + 6 Members)
     │   ├── Tourism & Events
     │   └── WestWorld
     ├── Deputy City Manager — Kira Peters
-    │   ├── (Portfolio TBD — community-focused departments)
-    │   └── ...
+    │   ├── Human Services & Library
+    │   ├── Community Services
+    │   ├── Neighborhood Services
+    │   └── Public Engagement
     ├── Assistant to City Manager — Will Brooks
     │   └── Cross-departmental projects & performance management
     ├── Police Department — Chief Joe LeDuc
     ├── Fire Department — Chief Tom Shannon
     ├── Transportation & Infrastructure
     ├── Planning & Development Services
-    ├── Human Services & Library
     └── Water Resources
 ```
 
