@@ -1,5 +1,22 @@
 # Project Setup Workflow
 
+## Default Organization Context
+
+**IMPORTANT**: When the user references projects, boards, or repositories without specifying an owner, determine the correct context dynamically:
+
+1. **Detect the user's org**: Call `get_teams` to discover which organizations the user belongs to
+2. **Prefer org-level projects**: Use `owner_type: "org"` by default when listing or searching projects
+3. **If the user belongs to one org**: Use that org as the default owner
+4. **If the user belongs to multiple orgs**: Ask which org they want to use
+5. **Personal projects**: Only search personal (user-level) projects when the user explicitly says "my personal projects" or specifies their username
+
+This prevents the common issue of searching personal projects when the team's boards live at the org level.
+
+### Why this matters
+GitHub Projects V2 separates user and org namespaces. A project created under an org will NOT appear when querying the user's personal projects. Always pass `owner_type: "org"` for organization-owned projects.
+
+---
+
 ## Creating a New GitHub Project
 
 When the user wants to create a new project for task tracking:

@@ -1,5 +1,16 @@
 # Board Management Workflow
 
+## Default Context
+
+When the user asks about boards or project items without specifying an owner:
+1. Call `get_teams` to detect the user's organization(s)
+2. Use the detected org as the owner with `owner_type: "org"`
+3. If multiple orgs exist, ask the user which one to use
+4. Always pass `owner_type: "org"` to `projects_list` and `projects_write` calls for org-owned projects
+5. Only use the user's personal account when explicitly requested
+
+---
+
 ## Viewing the Board
 
 When the user asks about board status:
