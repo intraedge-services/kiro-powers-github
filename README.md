@@ -28,10 +28,13 @@
 
 ## Star Schema Diagram
 
-Open the diagram directly in draw.io:  
-👉 [**View Star Schema Diagram**](https://app.diagrams.net/#Uhttps%3A%2F%2Fraw.githubusercontent.com%2Fintraedge-services%2Fdnilesh-poc-data-pipeline%2Ffeature%2Fcos-business-overview%2Fdiagrams%2Fstar-schema-overview.drawio)
+The star schema diagram is available as an editable `.drawio` file:  
+📁 [diagrams/star-schema-overview.drawio](diagrams/star-schema-overview.drawio)
 
-Or download the file: [diagrams/star-schema-overview.drawio](diagrams/star-schema-overview.drawio)
+**To view it:**
+1. Download the file from GitHub
+2. Open at [app.diagrams.net](https://app.diagrams.net) → File → Open From → Device
+3. Or install the [Draw.io VS Code extension](https://marketplace.visualstudio.com/items?itemName=hediet.vscode-drawio) to view inline
 
 ### Schema at a Glance
 
