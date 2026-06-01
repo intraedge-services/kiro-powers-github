@@ -12,15 +12,34 @@ author: "Kiro Community"
 
 Before using the GitHub Power, ensure the following:
 
+- **Docker Desktop** (REQUIRED): This power runs the official GitHub MCP Server as a Docker container.
+  - **Install**: https://www.docker.com/products/docker-desktop/
+  - **Verify installed**: Run `docker --version` in your terminal
+  - **Verify running**: Run `docker info` — if you see an error, open Docker Desktop and wait for it to start
+  - **CRITICAL**: If you see `spawn docker ENOENT`, Docker is not installed. If you see `failed to connect to the docker API`, Docker is installed but not running.
+  - The image (`ghcr.io/github/github-mcp-server`) is pulled automatically on first use
+
 - **GitHub Personal Access Token (PAT)**: You need a PAT with these scopes:
   - `repo` (full repository access)
   - `project` (GitHub Projects V2 access)
   - `read:org` (organization project access)
-  - **CRITICAL**: If `GITHUB_TOKEN` is not set, DO NOT proceed. Guide the user to create a PAT at https://github.com/settings/tokens
+  - Create a PAT at: https://github.com/settings/tokens
+  - Set it in your shell environment:
+    ```bash
+    # Add to ~/.zshrc or ~/.bashrc
+    export GITHUB_PERSONAL_ACCESS_TOKEN=ghp_your_token_here
+    ```
+  - Then approve `GITHUB_PERSONAL_ACCESS_TOKEN` in Kiro: Settings → search "Mcp Approved Env Vars" → add it
+  - **CRITICAL**: If `GITHUB_PERSONAL_ACCESS_TOKEN` is not set in your environment, the server will fail to authenticate
 
-- **Docker Desktop**: Required to run the official GitHub MCP Server image
-  - Verify with: `docker --version`
-  - The image (`ghcr.io/github/github-mcp-server`) is pulled automatically on first use
+## Troubleshooting
+
+| Error | Cause | Fix |
+|-------|-------|-----|
+| `spawn docker ENOENT` | Docker is not installed | Install Docker Desktop from https://www.docker.com/products/docker-desktop/ |
+| `failed to connect to the docker API` | Docker is installed but not running | Open Docker Desktop, wait for it to fully start, then reconnect the MCP server |
+| `Connection closed` immediately | Docker daemon not ready OR token missing | Wait for Docker to be fully ready (whale icon stable), verify `GITHUB_PERSONAL_ACCESS_TOKEN` is set in your shell environment |
+| `401 Unauthorized` | Invalid or expired token | Generate a new PAT with required scopes and update your shell environment |
 
 ## Step 2: Verify MCP server connectivity
 
@@ -28,7 +47,8 @@ After installation, verify the MCP server is accessible:
 1. Test by calling the `get_me` tool — it should return the authenticated user's details
 
 If it fails, check:
-- `GITHUB_TOKEN` is set correctly in your `.env` file
+- `GITHUB_PERSONAL_ACCESS_TOKEN` is set in your shell environment (`echo $GITHUB_PERSONAL_ACCESS_TOKEN`)
+- The variable is approved in Kiro settings (Settings → "Mcp Approved Env Vars")
 - Docker is running (`docker ps` should work)
 - The token has the required scopes
 - Network connectivity to api.github.com
