@@ -39,11 +39,11 @@ cd kiro-powers-github
 Add your token to your shell profile (required for Kiro to pass it to Docker):
 
 ```bash
-echo 'export GITHUB_TOKEN="ghp_your_token_here"' >> ~/.zshrc
+echo 'export GITHUB_PERSONAL_ACCESS_TOKEN="ghp_your_token_here"' >> ~/.zshrc
 source ~/.zshrc
 ```
 
-> **Important:** The token must be in your shell environment, not just a `.env` file. Kiro resolves `${GITHUB_TOKEN}` from the environment when spawning the Docker container.
+> **Important:** The token must be in your shell environment, not just a `.env` file. Kiro resolves `${GITHUB_PERSONAL_ACCESS_TOKEN}` from the environment when spawning the Docker container. You also need to approve this variable in Kiro: Settings → search "Mcp Approved Env Vars" → add `GITHUB_PERSONAL_ACCESS_TOKEN`.
 
 ### 3. Start Docker Desktop
 
@@ -153,13 +153,22 @@ kiro-powers-github/
 
 1. Is Docker running? → `docker ps` should work
 2. Can you pull the image? → `docker pull ghcr.io/github/github-mcp-server`
-3. Is `GITHUB_TOKEN` in your environment? → `echo $GITHUB_TOKEN` should show your token
-4. Did you restart Kiro after adding the token to `~/.zshrc`?
+3. Is `GITHUB_PERSONAL_ACCESS_TOKEN` in your environment? → `echo $GITHUB_PERSONAL_ACCESS_TOKEN` should show your token
+4. Is the variable approved in Kiro? → Settings → "Mcp Approved Env Vars" → add `GITHUB_PERSONAL_ACCESS_TOKEN`
+5. Did you restart Kiro after adding the token to `~/.zshrc`?
+
+### `spawn docker ENOENT`
+
+- Docker is not installed → Install [Docker Desktop](https://www.docker.com/products/docker-desktop/)
+
+### `failed to connect to the docker API`
+
+- Docker is installed but not running → Open Docker Desktop, wait for it to fully start, then reconnect the MCP server
 
 ### 401 Bad Credentials
 
 - Token expired → regenerate at https://github.com/settings/tokens
-- Token not in environment → add `export GITHUB_TOKEN="ghp_..."` to `~/.zshrc`, then restart Kiro
+- Token not in environment → add `export GITHUB_PERSONAL_ACCESS_TOKEN="ghp_..."` to `~/.zshrc`, then restart Kiro
 - Wrong scopes → ensure `repo`, `project`, `read:org` are enabled
 
 ### Projects V2 operations fail
@@ -178,7 +187,8 @@ For new team members setting up this Power:
 
 - [ ] Install [Docker Desktop](https://www.docker.com/products/docker-desktop/) and ensure it's running
 - [ ] Create a [GitHub PAT](https://github.com/settings/tokens) with scopes: `repo`, `project`, `read:org`
-- [ ] Add token to shell: `echo 'export GITHUB_TOKEN="ghp_..."' >> ~/.zshrc && source ~/.zshrc`
+- [ ] Add token to shell: `echo 'export GITHUB_PERSONAL_ACCESS_TOKEN="ghp_..."' >> ~/.zshrc && source ~/.zshrc`
+- [ ] Approve the variable in Kiro: Settings → "Mcp Approved Env Vars" → add `GITHUB_PERSONAL_ACCESS_TOKEN`
 - [ ] Clone this repo: `git clone https://github.com/<your-org>/kiro-powers-github.git`
 - [ ] Pre-pull Docker image: `docker pull ghcr.io/github/github-mcp-server`
 - [ ] Open Kiro → Powers panel → "Add power from Local Path" → select the cloned directory
